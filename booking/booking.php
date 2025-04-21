@@ -40,7 +40,6 @@ if (isset($_POST['send'])) {
     $guest = mysqli_real_escape_string($link, $_POST['guest']);
     $arrivals = mysqli_real_escape_string($link, $_POST['arrivals']);
     $leaving = mysqli_real_escape_string($link, $_POST['leaving']);
-    $package_id = $_POST['package_id']; // Obtener el ID del paquete seleccionado
     $duracion_paquete_id = $_POST['duracion_paquete_id']; // Obtener el ID de la duración seleccionada
 
     // Consultar la duración y el precio del paquete seleccionado
@@ -127,25 +126,56 @@ if (isset($_POST['send'])) {
                 <input type="text" placeholder="Introduce tu dirección" name="address" value="<?= htmlspecialchars($user_data['direccion']) ?>" required>
             </div>
 
-            <!-- Selección de Paquete -->
-            <div class="inputBox">
-                <span>Selecciona tu paquete:</span>
-                <select name="package_id" required>
-                    <option value="">Selecciona un paquete</option>
-                    <?php
-                    while ($package = mysqli_fetch_assoc($packages_result)) {
-                        echo "<option value='" . $package['id'] . "'>" . htmlspecialchars($package['nombre']) . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-
             <!-- Número de personas -->
             <div class="inputBox">
                 <span>Número de personas:</span>
                 <input type="number" placeholder="Introduce número de personas" name="guest" required>
             </div>
+ <!-- Selección de paquete (ya mostrado) -->
+ <div class="inputBox">
+            <span>Paquete seleccionado:</span>
+            <?php
+            // Obtener el paquete seleccionado
+            if (isset($_GET['id'])) {
+                $package_id = $_GET['id'];
 
+                // Consultar el nombre del paquete
+                $package_query = "SELECT nombre FROM paquetes WHERE id = '$package_id'";
+                $package_result = mysqli_query($link, $package_query);
+                if ($package_result && mysqli_num_rows($package_result) > 0) {
+                    $package_data = mysqli_fetch_assoc($package_result);
+                    $package_name = $package_data['nombre'];
+                } else {
+                    $package_name = "Paquete no encontrado";
+                }
+            } else {
+                $package_name = "No se seleccionó ningún paquete";
+            }
+            ?>
+            <input type="text" value="<?= htmlspecialchars($package_name) ?>" disabled>
+        </div>
+          <!-- Selección de duración y precio -->
+          <div class="inputBox">
+            <span>Duración y precio:</span>
+            <select name="duracion_paquete_id" required>
+                <option value="">Selecciona Paquete y precio</option>
+                <?php
+                // Asegúrate de que tienes el ID del paquete
+                if (isset($package_id)) {
+                    // Obtener las duraciones y precios del paquete seleccionado
+                    $query = "
+                        SELECT dp.id, dp.duracion, dp.precio 
+                        FROM duraciones_paquete dp
+                        WHERE dp.paquete_id = '$package_id'";  // Filtrar por el paquete seleccionado
+
+                    $result = mysqli_query($link, $query);
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<option value='{$row['id']}'>Paquete: {$row['duracion']} días - €" . number_format($row['precio'], 2) . "</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div>
             <!-- Fecha de inicio -->
             <div class="inputBox">
                 <span>Fecha inicio:</span>
@@ -158,29 +188,27 @@ if (isset($_POST['send'])) {
                 <input type="date" name="leaving" required>
             </div>
         </div>
-        <!-- Selección de duración y precio del paquete -->
-        <div class="inputBox">
-            <span>Duración y precio:</span>
-            <select name="duracion_paquete_id" id="duracion-select" required>
-                <option value="">Selecciona duración y precio</option>
-                <!-- Se llenará con JS -->
-            </select>
-        </div>
+
+       
+
+      
 
         <input type="submit" value="Enviar" class="btn" name="send">
     </form>
 </section>
 
-<?php if ($reservation_success): ?>
 <!-- Modal de éxito -->
-<div id="modal-overlay" onclick="closeModal()"></div>
-<div id="modal-message">
-    <span class="close-button" onclick="closeModal()">&times;</span>
-    <h2>¡Reserva realizada con éxito!</h2>
-    <p>Tu reserva ha sido realizada con éxito. ¡Gracias por elegirnos!</p>
-    <button onclick="closeModal()">Cerrar</button>
+<?php if ($reservation_success): ?>
+<div id="modal-overlay" class="modal-overlay">
+    <div id="modal-message" class="modal-content">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <h2>¡Reserva realizada con éxito!</h2>
+        <p>Tu reserva ha sido realizada con éxito. ¡Gracias por elegirnos!</p>
+        <button onclick="closeModal()">Cerrar</button>
+    </div>
 </div>
 <?php endif; ?>
+
 
 <!-- Footer -->
 <?php include('../includes/footer.php'); ?>
@@ -189,36 +217,23 @@ if (isset($_POST['send'])) {
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="../js/script.js"></script>
 <script>
-    const duracionesPorPaquete = <?php
-        $duraciones_result = mysqli_query($link, "SELECT id, paquete_id, duracion, precio FROM duraciones_paquete");
-        $duraciones_array = [];
+// Función para cerrar el modal
+// Función para cerrar el modal correctamente
+function closeModal() {
+    document.getElementById('modal-overlay').style.display = 'none';
+    document.getElementById('modal-message').style.display = 'none';
+}
 
-        while ($row = mysqli_fetch_assoc($duraciones_result)) {
-            $duraciones_array[$row['paquete_id']][] = [
-                'id' => $row['id'],
-                'duracion' => $row['duracion'],
-                'precio' => $row['precio']
-            ];
-        }
 
-        echo json_encode($duraciones_array);
-    ?>;
-
-    document.querySelector('[name="package_id"]').addEventListener('change', function () {
-        const paqueteId = this.value;
-        const selectDuracion = document.getElementById('duracion-select');
-        selectDuracion.innerHTML = '<option value="">Selecciona duración y precio</option>';
-
-        if (paqueteId && duracionesPorPaquete[paqueteId]) {
-            duracionesPorPaquete[paqueteId].forEach(duracion => {
-                const option = document.createElement('option');
-                option.value = duracion.id;
-                option.textContent = `${duracion.duracion} - $${duracion.precio}`;
-                selectDuracion.appendChild(option);
-            });
-        }
-    });
+// Mostrar el modal si la reserva es exitosa
+window.addEventListener('load', function() {
+    const successFlag = document.body.getAttribute('data-success');
+    if (successFlag === 'true') {
+        document.getElementById('reservationModal').style.display = 'block';
+    }
+});
 </script>
+
 
 </body>
 </html>

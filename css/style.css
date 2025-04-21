@@ -1951,7 +1951,7 @@ textarea {
     z-index: 9998;
 }
 #modal-message {
-    display: flex; /* Mostrado cuando es necesario */
+    display: flex !important; /* Mostrado cuando es necesario */
     position: fixed;
     top: 50%;
     left: 50%;
@@ -1980,6 +1980,14 @@ textarea {
     font-weight: bold;
     color: white;
     cursor: pointer;
+}
+/* Añadir visibilidad al modal cuando la clase .show se agrega */
+#modal-overlay.show, #modal-message.show {
+    display: block;
+}
+
+#modal-message {
+    display: none; /* Inicialmente oculto */
 }
 
 .close-button:hover {

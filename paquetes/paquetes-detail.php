@@ -146,7 +146,8 @@ if (isset($_POST['send_comment'])) {
     </div>
 <?php endif; ?>
 <div class="booking-button-container">
-    <a href="../booking/booking.php" class="btn">Reservar Ahora</a>
+<a href="../booking/booking.php?id=<?php echo $package_id; ?>&duracion=<?php echo $duraciones[0]['duracion']; ?>&precio=<?php echo $duraciones[0]['precio']; ?>" class="btn">Reservar Ahora</a>
+
 </div>
 
     <!-- Servicios incluidos -->

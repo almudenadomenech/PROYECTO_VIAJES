@@ -106,11 +106,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('load', initializePackages);
 
-    // Cerrar modal de reserva
-    function closeModal() {
-        const modal = document.getElementById('modal-message');
-        const overlay = document.getElementById('modal-overlay');
-        if (modal) modal.style.display = 'none';
-        if (overlay) overlay.style.display = 'none';
-    }
+   
+  
 });
