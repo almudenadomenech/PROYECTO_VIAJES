@@ -133,6 +133,7 @@ html::-webkit-scrollbar-thumb {
     /* Sombra luminosa */
     box-shadow: 0 0 10px rgba(142, 68, 173, 0.5), 0 0 15px rgba(142, 68, 173, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Añadir para evitar que el dropdown se solape */
 }
 
 /* Estilo para la imagen dentro del contenedor */
@@ -2883,5 +2884,95 @@ table td:nth-child(1), table th:nth-child(1) {
 
     .close {
         font-size: 22px;
+    }
+}
+
+
+/* ===================================================== */
+/*                    MEDIA QUERIES                    */
+/* ===================================================== */
+
+/* Para pantallas con un ancho máximo de 1200px */
+@media(max-width: 1200px) {
+    .profile-photo {
+        width: 40px; /* Ajusta el tamaño de la imagen de perfil */
+        height: 40px; /* Ajusta el tamaño de la imagen de perfil */
+    }
+
+    .profile-photo img {
+        object-fit: cover; /* Asegura que la imagen se ajuste bien al contenedor circular */
+    }
+
+    .dropdown-content {
+        min-width: 160px; /* Ajusta el tamaño del desplegable */
+    }
+
+    .dropdown-content a {
+        font-size: 14px !important; /* Tamaño de fuente adecuado */
+    }
+}
+
+/* Para pantallas con un ancho máximo de 991px */
+@media(max-width: 991px) {
+    .profile-photo {
+        width: 35px; /* Reduce el tamaño de la imagen de perfil */
+        height: 35px; /* Reduce el tamaño de la imagen de perfil */
+    }
+
+    .profile-photo img {
+        object-fit: cover; /* Mantiene la imagen ajustada dentro del círculo */
+    }
+
+    .dropdown-content {
+        min-width: 140px; /* Ajuste del ancho del dropdown */
+        right: -15px; /* Ajusta la posición para que se vea mejor */
+    }
+
+    .dropdown-content a {
+        font-size: 14px !important; /* Tamaño adecuado de la fuente */
+    }
+}
+
+/* Para pantallas con un ancho máximo de 768px */
+@media(max-width: 768px) {
+    .profile-photo {
+        width: 30px; /* Reduce el tamaño de la imagen de perfil */
+        height: 30px; /* Reduce el tamaño de la imagen de perfil */
+    }
+
+    .profile-photo img {
+        object-fit: cover; /* Evita que la imagen se deforme */
+    }
+
+    .dropdown-content {
+        min-width: 120px; /* Ajusta el tamaño del desplegable */
+        right: 0; /* Asegura que el desplegable se alinee correctamente */
+        top: 45px; /* Ajusta la posición para que no se sobreponga al contenido */
+    }
+
+    .dropdown-content a {
+        font-size: 13px !important; /* Tamaño adecuado de la fuente */
+    }
+}
+
+/* Para pantallas con un ancho máximo de 450px */
+@media(max-width: 450px) {
+    .profile-photo {
+        width: 28px; /* Reduce el tamaño de la imagen de perfil */
+        height: 28px; /* Reduce el tamaño de la imagen de perfil */
+    }
+
+    .profile-photo img {
+        object-fit: cover; /* Mantiene la imagen dentro del círculo */
+    }
+
+    .dropdown-content {
+        min-width: 100px; /* Ajusta el tamaño del desplegable */
+        right: 0; /* Ajuste de posición del dropdown */
+        top: 45px; /* Ajuste de la posición del dropdown para pantallas muy pequeñas */
+    }
+
+    .dropdown-content a {
+        font-size: 12px !important; /* Tamaño más pequeño para dispositivos muy pequeños */
     }
 }
