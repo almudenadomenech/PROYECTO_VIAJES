@@ -1,0 +1,2858 @@
+/* Se importa la fuente "Montserrat" desde Google Fonts, incluyendo variantes de estilo normal e itálico con diferentes pesos */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
+/* DEFINICION DE VARIABLES GLOBALES RETURILIZABLES EN TODO EL CSS */
+
+:root {
+    /* Color principal del tema */
+    --main-color: #8e44ad;
+    /* Color negro base */
+    --black: #222;
+    /* Color blanco base */
+    --white: #fff;
+    /* Color gris oscuro para textos secundarios */
+    --light-black: #777;
+    /* Blanco con una ligera transparencia */
+    --light-white: #fff9;
+    /* Fondo oscuro semitransparente */
+    --dark-bg: rgba(0,0,0, .7);
+    /* Fondo claro para secciones */
+    --light-bg: #eee;
+    /* Borde grueso de 1rem en color negro */
+    --border: 1rem solid var(--black);
+    /* Sombra de caja para dar profundidad a elementos */
+    --box-shadow: 0 .5rem 1rem rgba(0,0,0, .1);
+    /* Sombra para textos que da efecto de profundidad */
+    --text-shadow: 0 1.5rem 3rem rgba(0,0,0, .3);
+}
+
+
+
+/* ESTILOS GLOBALES PARA TODOS LOS ELEMENTOS DEL DOCUMENTO */
+
+* {
+    /* Se asigna la fuente Montserrat; en caso de no cargar se usará una fuente serif */
+    font-family: "Montserrat", serif;
+    /* Elimina márgenes y paddings predeterminados para tener un lienzo limpio */
+    margin: 0; padding: 0;
+    /* Hace que el padding y border se incluyan en el cálculo del ancho y alto del elemento */
+    box-sizing: border-box;
+    /* Elimina el contorno y borde por defecto de elementos interactivos */
+    outline: none; border: none;
+    /* Quita subrayados y otras decoraciones de texto */
+    text-decoration: none;
+    /* Convierte la primera letra de cada palabra en mayúscula (según el contexto) */
+    text-transform: capitalize;
+}
+
+
+
+/* ESTILOS PARA EL ELEMENTOS RAIZ HTML */
+
+html {
+    /* Se establece un tamaño base de fuente de 62.5% para facilitar el uso de rem (1rem = 10px aproximadamente) */
+    font-size: 62.5%;
+    /* overflow: hidden;  --> Comentado: serviría para ocultar desbordamientos, pero se encuentra inactivo */
+}
+
+
+
+/* PERSONALIZACION DE LA BARRA DE DESPLAZAMIENTO EN NAVEGADORES BASADO EN WEBKIT */
+
+html::-webkit-scrollbar {
+    /* Ancho de la scrollbar */
+    width: 1rem;
+}
+html::-webkit-scrollbar-track {
+    /* Color del fondo del track de la scrollbar, usando la variable --main-color */
+    background-color: var(--main-color);
+}
+html::-webkit-scrollbar-thumb {
+    /* Color de la parte móvil (thumb) de la scrollbar, usando la variable --white */
+    background-color: var(--white);
+}
+
+
+
+/* ---------------SECCION NAVBAR (DESPLEGABLE) ---------- */
+
+/* Estilo para el menú desplegable */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    top: 50px; /* Ajusta según el espacio necesario */
+    right: 0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 12px !important;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+/* Estilos para la imagen de perfil en el navbar */
+/* Contenedor de la imagen de perfil */
+
+.profile-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px; /* Manteniendo las medidas originales */
+    height: 45px;
+    border-radius: 50%; /* Redondeado */
+    padding: 3px; /* Espacio entre la imagen y el borde */
+    border: 2px solid transparent; /* Borde inicial */
+    
+    /* Gradiente en el borde */
+    background-image: linear-gradient(45deg, rgba(142, 68, 173, 0.8), rgba(142, 68, 173, 0.5));
+    background-origin: border-box;
+    background-clip: content-box, border-box; /* Asegura que el gradiente quede solo en el borde */
+
+    /* Sombra luminosa */
+    box-shadow: 0 0 10px rgba(142, 68, 173, 0.5), 0 0 15px rgba(142, 68, 173, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Estilo para la imagen dentro del contenedor */
+.profile-photo img {
+    width: 100%; /* Se ajusta automáticamente dentro del contenedor */
+    height: 100%;
+    border-radius: 50%; /* Mantiene la forma circular */
+    object-fit: cover; /* Evita que la imagen se deforme */
+}
+
+/* Efecto hover para resaltar la imagen */
+.profile-photo:hover {
+    transform: scale(1.1); /* Efecto de crecimiento */
+    box-shadow: 0 0 15px rgba(142, 68, 173, 0.8), 0 0 20px rgba(142, 68, 173, 0.5);
+}
+
+
+
+
+/* SECCION PARA TODAS LAS ETIQUETAS <section> */
+
+section {
+    /* Espaciado interno: 5rem en vertical y 10px en horizontal */
+    padding: 5rem 10px;
+}
+
+/* Animación "fadeIn" para efecto de aparición de elementos */
+@keyframes fadeIn {
+    0% {
+       /* Inicia con escala 0 (invisible) y opacidad 0 (transparente) */
+       transform: scale(0);
+       opacity: 0;
+    }
+    /* Se omite el 100% ya que se asume que el navegador lleva el elemento a su estado natural (escala 1 y opacidad 1) */
+}
+
+
+/* ESTILOS PARA EL ENCABEZADO (header) GRANDE, PARTE SUPERIOR DE LA SECCION */
+
+.heading {
+   /* Asegura que el fondo cubra todo el contenedor */
+   background-size: cover !important;
+   /* Centra el fondo en el contenedor */
+   background-position: center !important;
+   /* Espacio interno en la parte superior */
+   padding-top: 10rem;
+   /* Espacio interno en la parte inferior */
+   padding-bottom: 15rem;
+   /* Uso de flexbox para centrar su contenido */
+   display: flex;
+   /* Centrado vertical de los elementos */
+   align-items: center;
+   /* Centrado horizontal de los elementos */
+   justify-content: center;
+}
+
+
+/* ESTILOS PARA EL TITULO PRINCIPAL DENTRO DEL ENCABEZADO */
+
+.heading h1 {
+    /* Tamaño muy grande para resaltar el título */
+    font-size: 10rem;
+    /* Transforma el texto a mayúsculas */
+    text-transform: uppercase;
+    /* Color blanco para el texto */
+    color: var(--white);
+    /* Aplica sombra de texto para efecto de profundidad, reutilizando la variable de box-shadow */
+    text-shadow: var(--box-shadow);
+}
+
+
+
+/* ESTILOS PARA LOS BOTONES GENÉRICOS */
+
+/* ESTILOS PARA LOS BOTONES GENÉRICOS */
+.btn {
+    display: inline-block;                        /* Permite que el botón se comporta como un bloque en línea */
+    background: linear-gradient(45deg, var(--main-color), #2980b9); /* Fondo con gradiente de tus colores */
+    margin-top: 1rem;                             /* Espacio superior para separar del contenido */
+    color: var(--white);                          /* Color de texto blanco */
+    font-size: 1.7rem;                            /* Tamaño de fuente mayor para visibilidad */
+    padding: 1rem 3rem;                           /* Relleno interno para mayor área clicable */
+    cursor: pointer;                             /* Cambia el cursor a pointer cuando se pasa el ratón */
+    border-radius: 12px;                          /* Esquinas redondeadas */
+    text-align: center;                           /* Alineación de texto al centro */
+    transition: background 0.3s ease, box-shadow 0.3s ease; /* Transición suave para el gradiente y sombra */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);   /* Sombra sutil para darle relieve */
+    border: none;                                /* Sin borde para el botón */
+}
+
+/* Efecto hover */
+.btn:hover {
+    background: linear-gradient(45deg, var(--main-color), #8e44ad); /* Cambio del gradiente de color de fondo */
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);   /* Aumenta la sombra al pasar el ratón */
+}
+
+/* Efecto focus (al hacer clic) */
+.btn:focus {
+    outline: none;                                /* Elimina el contorno al hacer clic */
+    box-shadow: 0 0 10px rgba(41, 128, 185, 0.6); /* Añade un resplandor más intenso */
+}
+
+
+
+/* ESTILO PARA LOS TITULOS SECUNDARIOS DE SECCIONES */
+
+.heading-title {
+    /* Alinea el texto al centro */
+    text-align: center;
+    /* Espaciado inferior para separar de otros elementos */
+    margin-bottom: 3rem;
+    /* Tamaño de fuente grande */
+    font-size: 6rem;
+    /* Transforma el texto a mayúsculas */
+    text-transform: uppercase;
+    /* Color del texto negro */
+    color: var(--black);
+}
+
+
+/* ESTILOS PARA LA CABECERA (HEADER) DE LA PÁGINA */
+
+.header {
+   /* Posiciona el header de forma sticky para que se mantenga visible al hacer scroll */
+   position: sticky;
+   /* Ubicación en la parte superior, izquierda y derecha */
+   top: 0; left: 0; right: 0;
+   /* Asegura que se muestre por encima de otros elementos */
+   z-index: 1000;
+   /* Fondo blanco */
+   background-color: var(--white);
+   /* Uso de flexbox para alinear los elementos internos */
+   display: flex;
+   /* Padding lateral para separación interna */
+   padding: 0 2rem;
+   /* Aplica una sombra para dar efecto de elevación */
+   box-shadow: var(--box-shadow);
+   /* Alinea verticalmente los elementos */
+   align-items: center;
+   /* Distribuye el espacio entre elementos (por ejemplo, logo y menú) */
+   justify-content: space-between;
+   /* Altura fija de la cabecera */
+   height: 90px; 
+}
+
+/* Estilo para el logo dentro de la cabecera */
+.header .logo {
+    /* Tamaño de fuente para destacar el logo */
+    font-size: 2.5rem;
+    /* Color negro para el texto */
+    color: var(--black);
+}
+
+/* Estilos para los enlaces del menú de navegación en la cabecera */
+.header .navbar a {
+    /* Tamaño de fuente para los enlaces */
+    font-size: 2rem;
+    /* Margen a la izquierda para separar cada enlace */
+    margin-left: 2rem;
+    /* Color negro para el texto */
+    color: var(--black);
+}
+
+/* Efecto al pasar el mouse sobre los enlaces del menú */
+.header .navbar a:hover {
+    /* Cambia el color del texto al color principal */
+    color: var(--main-color);
+}
+
+
+/* ESTILOS PARA EL BOTON DE MENU QUE APARECE EN DISPOSITIVOS MOVILES */
+
+#menu-btn {
+    /* Tamaño de fuente para el icono */
+    font-size: 2.5rem;
+    /* Cursor pointer para indicar que es clickeable */
+    cursor: pointer;
+    /* Color negro para el icono */
+    color: var(--black);
+    /* Oculto por defecto en pantallas grandes */
+    display: none;
+}
+
+
+
+/* ------------------SECCIÓN HOME ---------------- */
+
+.home {
+    /* Elimina cualquier padding para ocupar el ancho completo */
+    padding: 0;
+}
+
+/* Estilos para cada slide dentro de la sección home */
+.home .slide {
+    /* Centra el texto */
+    text-align: center;
+    /* Padding general para el slide */
+    padding: 2rem;
+    /* Uso de flexbox para centrar su contenido tanto vertical como horizontalmente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Asegura que el fondo cubra el slide y esté centrado */
+    background-size: cover !important;
+    background-position: center !important;
+    /* Altura mínima para asegurar un slide lo suficientemente grande */
+    min-height: 60rem;
+}
+
+/* Contenedor del contenido dentro de cada slide */
+.home .slide .content {
+    /* Ancho fijo para el contenedor de contenido */
+    width: 85rem;
+    /* display: none;  --> Comentado: originalmente ocultaría el contenido */
+}
+
+/* Muestra el contenido del slide cuando es el activo en el slider */
+.home .swiper-slider-active .content {
+    display: inline-block;
+}
+
+/* Estilos para los elementos <span> dentro del contenido del slide */
+.home .slide .content span {
+    /* Se muestra en bloque para ocupar toda la línea */
+    display: block;
+    /* Tamaño de fuente moderado */
+    font-size: 2.2rem;
+    /* Color gris claro para el texto */
+    color: var(--light-black);
+    /* Espacio inferior para separar de otros elementos */
+    padding-bottom: 1rem;
+    /* Aplica la animación fadeIn con una duración y retardo específicos */
+    animation: fadeIn .2s linear backwards .2s;
+}
+
+/* Estilos para los encabezados <h3> dentro del contenido del slide */
+.home .slide .content h3 {
+    /* Tamaño de fuente responsivo basado en el ancho de la pantalla */
+    font-size: 6vw;
+    /* Color blanco */
+    color: var(--white);
+    /* Transforma el texto a mayúsculas */
+    text-transform: uppercase;
+    /* Línea de altura ajustada para una buena legibilidad */
+    line-height: 1;
+    /* Aplica sombra de texto para resaltar */
+    text-shadow: var(--text-shadow);
+    /* Espaciado vertical */
+    padding: 1rem 0;
+    /* Aplica la animación fadeIn con mayor retardo */
+    animation: fadeIn .2s linear backwards .4s;
+}
+
+/* Estilos para el botón dentro del contenido del slide */
+.home .slide .content .btn {
+    /* Aplica animación fadeIn con un retardo aún mayor */
+    animation: fadeIn .2s linear backwards .6s;
+}
+
+/* Estilos para los botones de navegación del slider (siguiente y previo) */
+.home .swiper-button-next,
+.home .swiper-button-prev {
+    /* Se desactivan las posiciones por defecto para poder posicionarlos en la esquina inferior */
+    top: inherit;
+    left: inherit;
+    bottom: 0;
+    right: 0;
+    /* Dimensiones fijas para los botones */
+    height: 7rem;
+    width: 7rem;
+    /* Fondo blanco para los botones */
+    background: var(--white);
+    /* Color negro para los íconos */
+    color: var(--black);
+}
+
+/* Efecto hover para los botones de navegación del slider */
+.home .swiper-button-next:hover,
+.home .swiper-button-prev:hover {
+    /* Al pasar el cursor, el fondo cambia al color principal */
+    background: var(--main-color);
+    /* El color del ícono se vuelve blanco */
+    color: var(--white);
+}
+
+/* Estilos para los pseudo-elementos (íconos de flecha) de los botones de navegación */
+.home .swiper-button-next::after,
+.home .swiper-button-prev::after {
+    /* Ajusta el tamaño de fuente de los íconos */
+    font-size: 2rem;
+}
+
+/* Posiciona el botón de navegación previo ligeramente a la izquierda */
+.home .swiper-button-prev {
+    right: 7rem;
+}
+
+
+
+/* ESTILOS PARA LA SECCIÓN DE SERVICIOS */
+
+.services .box-container {
+    /* Se utiliza grid para organizar las cajas de servicios */
+    display: grid;
+    /* Configura columnas responsivas con un ancho mínimo de 16rem */
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    /* Espacio entre las cajas */
+    gap: 1.5rem;
+}
+
+/* Estilos para cada caja de servicio */
+.services .box-container .box {
+    /* Padding interno para separar el contenido */
+    padding: 3rem 2rem;
+    /* Centra el texto */
+    text-align: center;
+    /* Fondo con el color principal */
+    background: var(--main-color);
+    /* Cambia el cursor a pointer para indicar interactividad */
+    cursor: pointer;
+}
+
+/* Efecto hover para cada caja de servicio */
+.services .box-container .box:hover {
+    /* Cambia el fondo a negro al pasar el mouse */
+    background: var(--black);
+}
+
+/* Estilos para las imágenes dentro de las cajas de servicio */
+.services .box-container .box img {
+    /* Altura fija para las imágenes */
+    height: 7rem;
+    /* Aplica filtro para invertir colores y ajustar el brillo */
+    filter: brightness(0) invert(1);
+}
+
+/* Estilos para los encabezados dentro de las cajas de servicio */
+.services .box-container .box h3 {
+    /* Color blanco para el texto */
+    color: var(--white);
+    /* Tamaño de fuente moderado */
+    font-size: 1.7rem;
+    /* Espacio superior para separar del elemento anterior */
+    padding-top: 1rem;
+}
+
+
+/* SECCION HOME-ABOUT */
+
+.home-about {
+    /* Usa flexbox para distribuir imagen y contenido uno al lado del otro */
+    display: flex;
+    align-items: center;
+    /* Permite que los elementos se envuelvan en múltiples líneas en pantallas pequeñas */
+    flex-wrap: wrap;
+}
+
+/* Contenedor de imagen dentro de "home-about" */
+.home-about .image {
+    /* Hace que la imagen ocupe una parte flexible con un ancho base de 41rem */
+    flex: 1 1 41rem;
+}
+.home-about .image img {
+    /* Asegura que la imagen ocupe el 100% del ancho del contenedor */
+    width: 100%;
+}
+
+/* Contenedor de contenido textual dentro de "home-about" */
+.home-about .content {
+    /* Hace que el contenido ocupe una parte flexible similar a la imagen */
+    flex: 1 1 41rem;
+    /* Espaciado interno para separar el contenido */
+    padding: 3rem;
+    /* Fondo claro para contrastar con otros elementos */
+    background: var(--light-bg);
+    /* Centra el contenido del botón */
+    text-align: center;
+}
+
+.home-about .content h3 {
+    /* Tamaño de fuente grande para el título */
+    font-size: 3rem;
+    /* Color negro */
+    color: var(--black);
+}
+.home-about .content p {
+    /* Tamaño de fuente para párrafos */
+    font-size: 1.5rem;
+    /* Espaciado vertical */
+    padding: 1rem 0;
+    /* Altura de línea para legibilidad */
+    line-height: 2;
+    /* Color negro */
+    color: var(--black);
+}
+
+
+/* SECCION HOME PACKAGES */
+
+.home-packages {
+    /* Fondo claro para diferenciar la sección */
+    background: var(--light-bg);
+}
+
+/* Contenedor general de cada caja en los paquetes */
+.home-packages .box-container .box,
+.packages .box-container .box {
+    display: flex;                    /* Organiza los elementos en columna */
+    flex-direction: column;            /* Los elementos se apilan verticalmente */
+    justify-content: space-between;    /* Distribuye el espacio, empujando el botón hacia abajo */
+    background: var(--white);          /* Fondo blanco */
+    border: 1px solid black;           /* Borde negro */
+    box-shadow: var(--box-shadow);     /* Sombra */
+}
+
+/* Asegura que el botón de reserva se posicione al final del contenedor */
+.home-packages .box-container .box .content .btn-reservar,
+.packages .box-container .box .content .btn-reservar,
+.home-about .content .btn-reservar {
+    margin-top: auto;       /* Empuja el botón hacia el final del contenedor */
+    
+}
+
+/* Contenedor de cajas de paquetes en la sección "home-packages" */
+.home-packages .box-container {
+    /* Uso de grid para organizar las cajas de forma responsiva */
+    display: grid;
+    /* Crea columnas con un ancho mínimo de 30rem */
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    /* Espacio entre las cajas */
+    gap: 2rem;
+}
+
+/* Estilos para cada caja individual de paquete en "home-packages" */
+.home-packages .box-container .box {
+    display: flex; /* Flexbox para manejar el contenido */
+    flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+    justify-content: flex-start; /* Asegura que el contenido comience desde la parte superior */
+    background: var(--white); /* Fondo blanco */
+    border: 1px solid black; /* Borde negro */
+    box-shadow: var(--box-shadow); /* Sombra */
+    height: 100%; /* Asegura que la caja ocupe toda la altura disponible */
+    min-height: 500px; /* Altura mínima para asegurar que todas las cajas tengan la misma altura */
+}
+
+/* Estilos para la sección de imagen dentro de cada caja de paquete */
+.home-packages .box-container .box .image {
+    /* Altura fija para la imagen */
+    height: 25rem;
+    /* Oculta partes de la imagen que excedan el contenedor */
+    overflow: hidden;
+}
+.home-packages .box-container .box .image img {
+    /* La imagen ocupa todo el contenedor */
+    height: 100%;
+    width: 100%;
+    /* Se ajusta para cubrir el contenedor sin distorsión */
+    object-fit: cover;
+    /* Define una transición (aunque no se especifica propiedad para transformar) */
+    transform: .2s linear;
+}
+
+/* Estilos para el contenido textual dentro de cada caja de paquete */
+.home-packages .box-container .box .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Esto asegura que los elementos dentro del .content estén distribuidos correctamente */
+    padding: 2rem;
+    text-align: center;
+    flex-grow: 1; /* Permite que el contenido ocupe el espacio restante */
+}
+.home-packages .box-container .box .content h3 {
+    position: relative;
+    top: 0;
+    font-size: 2.5rem;
+    color: var(--black);
+    margin: 1rem 0;
+    padding: 0.5rem 0;
+    text-align: center;
+    min-height: 4.5rem; /* Establecer una altura mínima para el título */
+    display: flex;
+    align-items: center; /* Centra el título verticalmente */
+}
+
+.home-packages .box-container .box .content p {
+    font-size: 1.5rem;
+    color: var(--light-black);
+    line-height: 2;
+    padding: 1rem 0;
+    flex-grow: 1; /* Permite que el párrafo crezca para llenar el espacio */
+}
+
+/* Ajustes de estilo para el botón "Reservar ahora" */
+.home-packages .box-container .box .content .btn-reservar {
+    margin-top: auto; /* Empuja el botón hacia el final del contenedor */
+    padding: 1rem 2rem;
+    background-color: var(--black);
+    color: var(--white);
+    text-transform: capitalize;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+/* Hover en el botón */
+.home-packages .box-container .box .content .btn-reservar:hover {
+    background-color: var(--main-color);
+}
+
+
+/* Contenedor "load more" para cargar más paquetes */
+.home-packages .load-more {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+
+/* SECCION OFERTA */
+
+.home-offer {
+    text-align: center;
+}
+.home-offer .content {
+    /* Limita el ancho máximo del contenido */
+    max-width: 70rem;
+    /* Centra el contenido horizontalmente */
+    margin: 0 auto;    
+}
+.home-offer .content h3 {
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    color: var(--black);
+}
+.home-offer .content p {
+    font-size: 1.5rem;
+    color: var(--light-black);
+    line-height: 2;
+    padding: 1rem 0;
+}
+
+
+/* SECCION ABOUT */
+
+.about {
+    /* Usa flexbox para distribuir imagen y contenido */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+.about .image {
+    flex: 1 1 41rem;
+}
+.about .image img {
+    width: 100%;
+}
+.about .content {
+    flex: 1 1 41rem;
+    text-align: center;
+}
+.about .content h3 {
+    font-size: 3rem;
+    color: var(--black);
+}
+.about .content p {
+    font-size: 1.5rem;
+    color: var(--light-black);
+    line-height: 2;
+    padding: 1rem 0;
+}
+
+/* Contenedor de íconos en la sección "about" */
+.about .content .icons-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-end;  /* Alinea los íconos en la parte inferior */
+}
+.about .content .icons-container .icons {
+    background: var(--light-bg);
+    padding: 2rem;
+    flex: 1 1 16rem;  /* Hace que cada ícono tenga un tamaño mínimo y sea flexible */
+}
+.about .content .icons-container .icons i {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    color: var(--main-color);
+}
+.about .content .icons-container .icons span {
+    font-size: 1rem;
+    color: var(--light-black);
+    display: block;
+}
+
+
+
+
+/* ------------------PAQUETES---------------- */
+
+/* Contenedor principal de la sección de paquetes */
+.packages {
+    padding: 2rem 2rem;
+    background: var(--light-bg);
+}
+
+/* Sección "packages" para mostrar diferentes paquetes o servicios */
+.packages .box-container {
+    display: grid;
+    gap: 2rem;
+    /* Default: Crea columnas responsivas con un ancho mínimo de 30rem */
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+}
+
+/* Media query para pantallas más grandes */
+@media (min-width: 1200px) {
+    .packages .box-container {
+        /* Ajuste: Crea 3 columnas en pantallas grandes */
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Estilos para cada caja de paquete */
+/* Caja de paquete */
+.packages .box-container .box {
+    display: flex;
+    flex-direction: column;  /* Asegura que los elementos se apilen verticalmente */
+    background: var(--white);
+    border: 1px solid black;
+    box-shadow: var(--box-shadow);
+    min-height: 500px; /* Altura mínima */
+    position: relative;
+    padding-bottom: 4rem; /* Espacio para los botones */
+}
+
+/* Estilo del contenido dentro de la caja */
+.packages .box-container .box .content {
+    padding: 2rem;
+    text-align: center;
+    flex-grow: 1;  /* Hace que el contenido ocupe el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* Distribuye el contenido hacia arriba y abajo */
+}
+
+/* Título dentro del contenido */
+.packages .box-container .box .content h3 {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+    color: var(--black);
+}
+
+/* Estilos para la sección de imagen dentro de cada caja de paquete */
+.packages .box-container .box .image {
+    height: 25rem;
+    overflow: hidden;
+}
+
+.packages .box-container .box .image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transform: .2s linear;
+}
+
+/* Párrafo */
+.packages .box-container .box .content p {
+    font-size: 1.5rem;
+    color: var(--light-black);
+    line-height: 1.8;
+    padding: 1rem 0;
+}
+
+/* Aplica solo al botón general, NO a los de admin */
+.packages .box-container .box .content > .btn {
+    margin-top: 1rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem 2rem;
+    background-color: var(--black);
+    color: var(--white);
+    text-transform: capitalize;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+
+/* Hover en el botón */
+.packages .box-container .box .content .btn:hover {
+    background-color: var(--main-color);
+}
+
+/* Ajuste del contenedor "load more" para centrar el botón en la pantalla */
+.packages .load-more-packages {
+    display: flex;                /* Usamos flexbox para alinear */
+    justify-content: center;      /* Centra horizontalmente */
+    align-items: center;          /* Centra verticalmente */
+    padding: 1rem 0;              /* Espaciado superior e inferior */
+    position: relative;           /* Para usar transformaciones */
+    bottom: 0;                    /* Asegura que esté al fondo de la sección */
+    width: 100%;                  /* Asegura que ocupe todo el ancho disponible */
+}
+
+/* Estilo del botón "Leer más" */
+.packages .load-more-packages .btn {
+    padding: 1rem 2rem;
+    background-color: var(--black);
+    color: var(--white);
+    text-transform: capitalize;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+/* Hover en el botón */
+.packages .load-more-packages .btn:hover {
+    background-color: var(--main-color);
+}
+
+
+
+
+
+/* Contenedor de botones admin */
+.admin-btns {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: auto;  /* Asegura que se vayan al final del contenedor */
+    padding-top: 1rem;  /* Espacio superior */
+    width: 100%;  /* Hace que el contenedor ocupe todo el ancho disponible */
+}
+
+/* Botones */
+.admin-btns .btn {
+    padding: 1rem 2rem;
+    background-color: var(--black);
+    color: var(--white);
+    text-transform: capitalize;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    width: 48%;  /* Los botones se distribuyen igualmente */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+/* Hover en los botones */
+.admin-btns .btn:hover {
+    background-color: var(--main-color);
+}
+
+
+/* ----------------------PAQUETES DETAIL-------------------------- */
+
+.heading {
+    position: relative;
+    color: white;
+    text-align: center;
+    padding: 50px 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.heading h1 {
+    font-size: 6rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.package-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.package-info {
+    display: flex;
+    flex-direction: row;  /* Imagen y texto en fila */
+    gap: 10px;  /* Espacio entre los elementos */
+    padding: 10px 10px 5px 10px;  /* Ajustar el padding, reduciendo el margen inferior */
+    border-radius: none;
+    width: 100%;
+}
+
+
+.image-detail {
+    flex: 0 0 65%;  /* Imagen ocupa el % */
+    display: flex;
+    justify-content: auto;
+    align-items: auto;
+}
+
+.image-detail img {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+    border-radius: 10px;
+}
+
+.content {
+    flex: 1;
+    padding: 10px;
+}
+
+.content h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.content p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.info-container {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info-container p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+.extra-info {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-size: 1.05rem;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.extra-info td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+    color: #333;
+}
+
+.extra-info td:first-child {
+    font-weight: bold;
+    color: #222;
+    width: 35%;
+    white-space: nowrap;
+}
+
+.extra-info i {
+    color: var(--main-color);
+    margin-right: 8px;
+}
+
+/* Última fila sin borde inferior */
+.extra-info tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* Responsivo: Ajusta la estructura en pantallas pequeñas */
+@media (max-width: 768px) {
+    .package-info {
+        flex-direction: column;  /* Apilar la imagen y la información */
+        gap: 20px;
+    }
+
+    .image {
+        flex: 0 0 100%;  /* Imagen ocupa todo el ancho en pantallas pequeñas */
+    }
+
+    .info-container {
+        width: 100%;  /* La información también ocupa todo el ancho */
+    }
+}
+/* ------------------- PAQUETES VACACIONALES ------------------- */
+.durations {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 5px;
+    padding: 0;
+    
+    border-radius: 10px;
+    
+    /* Mover el contenedor hacia la izquierda  y hacia arriba */
+    transform: translate(-120px, -60px);
+}
+
+.durations h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;  /* Usamos un tono gris oscuro */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.duraciones-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.duracion-item {
+    background-color: #f9f9f9; /* Gris claro para las tarjetas */
+    padding: 20px;
+    border-radius: 10px;
+    width: 48%; /* Ajusta el ancho de las tarjetas */
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.duracion-item:hover {
+    transform: translateY(-5px);
+}
+
+.duracion-info h3 {
+    font-size: 1.8rem;
+    color: var(--main-color); /* Mantener el color principal definido en el CSS */
+    margin-bottom: 10px;
+}
+
+.duracion-info .price {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--main-color); /* Aquí utilizamos el color principal también */
+}
+
+.btn-select {
+    background-color: var(--main-color); /* Mantener el color principal */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+
+.btn-select:hover {
+    background-color: var(--main-color-dark); /* Un tono más oscuro del color principal */
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .duracion-item {
+        width: 100%;
+    }
+
+    .durations {
+        padding: 15px;
+    }
+
+    .duraciones-container {
+        flex-direction: column;
+    }
+}
+
+
+
+/* ----------------------GALERÍA CON SWIPER Y LIGHTBOX-------------------------- */
+
+
+/* Contenedor para la galería */
+.gallery-container {
+    position: relative;
+    width: 100%;
+    margin-top: 10px;  /* Reducido el espacio entre la imagen principal y la galería */
+}
+
+/* Swiper para la galería */
+.gallerySwiper {
+    max-width: 300px;
+    margin: 2px 0 10px 10px; /* Reducido el margen superior para acercar más la galería */
+    position: relative;
+    height: 120px;
+    min-height: 120px;
+}
+
+.gallery-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: -20px;  /* Mueve la galería hacia arriba */
+}
+
+
+
+/* Imagen principal */
+
+
+.gallery-image {
+    width: 90%; /* Ajustamos el tamaño de la imagen principal */
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 0 auto; /* Centra la imagen */
+}
+
+/* Contenedor del slide */
+.gallerySwiper .swiper-slide {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 0;
+    height: 120px;  /* Ajusta la altura para las miniaturas */
+    margin: 2px; /* Ajusta para tener márgenes más pequeños */
+    width: 100px;  /* Controlamos el ancho de cada miniatura */
+    margin-right: 2px;  /* Reducimos el margen entre las miniaturas */
+}
+
+
+/* Estilo de las miniaturas en el swiper */
+.gallerySwiper .swiper-slide img {
+    width: 100%;  /* Ajustamos el tamaño de las miniaturas */
+    height: 80px; /* Ajustamos el tamaño de las miniaturas */
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+/* Efecto hover para las miniaturas */
+.gallerySwiper .swiper-slide img.thumbnail:hover {
+    transform: scale(1.05);
+    border-color: #007BFF;
+}
+ /* Flechas de navegación */
+
+ 
+/* Estilo de los botones de navegación (flechas) */
+.gallery-wrapper .swiper-button-prev,
+.gallery-wrapper .swiper-button-next {
+    font-size: 18px; /* Tamaño del icono */
+    width: 40px; /* Ancho del botón */
+    height: 40px; /* Alto del botón */
+    color: var(--main-color); /* Cambia el color de las flechas */
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo con opacidad */
+    border-radius: 50%; /* Botones redondeados */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ajuste del tamaño del icono de la flecha */
+.gallery-wrapper .swiper-button-prev::after,
+.gallery-wrapper .swiper-button-next::after {
+    font-size: 18px; /* Ajusta el tamaño de la flecha */
+    transform: scale(1); /* Tamaño de la flecha sin redimensionarla */
+}
+
+/* Cambiar el color de las flechas al hacer hover */
+.gallery-wrapper .swiper-button-prev:hover,
+.gallery-wrapper .swiper-button-next:hover {
+    background-color: rgba(0, 123, 255, 0.2); /* Fondo más oscuro al hacer hover */
+    color:black; /* Color de las flechas al hacer hover */
+}
+
+
+/* Círculos de paginación */
+.gallery-container .swiper-pagination {
+    position: absolute;
+    bottom: -10px; /* Ajustamos un poco la posición de los círculos */
+    text-align: center;
+    width: 100%;
+    z-index: 11;
+}
+
+.gallery-container .swiper-pagination-bullet {
+    width: 6px;
+    height: 6px;
+    margin: 0 8px;
+    background-color: #007BFF;
+    opacity: 0.5;
+}
+
+.gallery-container .swiper-pagination-bullet-active {
+    opacity: 1;
+    background-color: #0056b3;
+}
+
+/* Lightbox */
+#lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+}
+
+#lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    border: 5px solid white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive tweaks para pantallas pequeñas */
+@media (max-width: 600px) {
+    /* Ajuste de las miniaturas en pantallas pequeñas */
+    .gallerySwiper .swiper-slide img.thumbnail {
+        width: 60px;
+        height: 50px;
+    }
+
+    /* Ajuste de las flechas de navegación en pantallas pequeñas */
+    .gallery-container .swiper-button-prev,
+    .gallery-container .swiper-button-next {
+        top: 40%;
+    }
+}
+
+/* DESCRIPCION DEL PAQUETE */
+.contenido-paquete {
+    background-color: #f9f9f9;
+    padding: 30px 20px;
+    margin: -25px 0 10px 0;
+
+    width: 100vw; /* Ocupa todo el ancho de la ventana */
+    max-width: none; /* Quitamos el límite de 900px */
+    position: relative;
+    left: -40px; /* Lo alineamos con el margen del resto de la página */
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+.contenido-paquete h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    border-left: 6px solid var(--main-color);
+    padding-left: 15px;
+    text-align: center;
+}
+
+.contenido-paquete p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.7;
+    white-space: pre-line;
+    text-align: left;
+    padding-left: 60px; /* Agrega espacio a la izquierda */
+    padding-right: 20px; /* Si deseas que también tenga un espacio a la derecha */
+}
+
+
+/* SERVICIOS INCLUIDOS */
+/* Estilo para el título de los servicios incluidos */
+.servicios-incluidos-title {
+    margin-top: -15px;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Estilo para la tabla de servicios incluidos */
+.tabla-incluidos {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse; /* Hace que los bordes no se dupliquen */
+}
+
+/* Estilo para cada celda de la tabla */
+.tabla-item {
+    padding: 15px;
+    border: none; /* Sin borde */
+    vertical-align: middle; /* Asegura que el contenido esté centrado */
+    margin-bottom: 25px;
+   
+}
+
+/* Estilo para el icono dentro de la celda */
+.tabla-item .icon {
+    font-size: 24px;
+    color: var(--main-color); /* Color para los iconos */
+    margin-bottom: 15px;
+}
+
+/* Estilo para el texto dentro de la celda */
+.tabla-item strong {
+    display: block; /* Asegura que el texto esté en una nueva línea */
+    font-size: 1.5rem;
+}
+
+/* COMENTARIOS */
+/* Estilos para el formulario de comentarios */
+
+.package-reviews h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center; /* o center si prefieres centrarlo */
+   
+    padding-bottom: 10px;
+}
+
+.review-form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review-form h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 16px;
+    color: #555;
+}
+
+select, textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+select {
+    height: 40px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+    max-height: 300px;
+}
+
+textarea:focus, select:focus {
+    outline: none;
+    border-color: #007BFF;
+}
+
+button {
+    padding: 12px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:active {
+    background-color: #004080;
+}
+
+/* Estilo para el mensaje de error o éxito */
+.message {
+    text-align: center;
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.message.error {
+    background-color: #ffcccc;
+    color: #cc0000;
+}
+
+.message.success {
+    background-color: #ccffcc;
+    color: #006600;
+}
+
+/* Estilo para los comentarios previos */
+.comments-container {
+    margin-top: 40px;
+}
+
+.comment {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-content .rating {
+    margin-bottom: 10px;
+}
+
+.star {
+    color: gold;
+    font-size: 18px;
+}
+
+.comment-content p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Para hacer que el formulario sea más responsivo */
+@media (max-width: 768px) {
+    .review-form-container {
+        width: 90%;
+    }
+    
+    .review-form h3 {
+        font-size: 22px;
+    }
+
+    select, textarea {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+.reviews-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    margin-top: 30px;
+    flex-wrap: wrap; /* Para que se acomode en móviles */
+}
+
+.review-form-container,
+.comments-container {
+    flex: 1;
+    min-width: 320px;
+}
+.review-form-container {
+    margin-left: -80px; /* Ajusta el valor según lo que necesites */
+}
+.user-info p strong {
+    font-size: 18px;
+    color: #222;
+}
+
+.user-info small {
+    font-size: 1px;
+    color: #666;
+}
+
+.divider {
+    width: 100%;
+    height: 2px;
+    background-color: var(--main-color);
+    margin: 40px 0;
+}
+/* puntuación promedio */
+
+.average-rating-box {
+    background-color: #eef6ff;
+    border: 1px solid #cce0ff;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 300px;
+    margin: 30px auto 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+}
+
+.rating-title {
+    font-size: 20px;
+    color:var(--main-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.rating-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.rating-display .star {
+    color: gold;
+    font-size: 22px;
+}
+
+.rating-display .star.empty {
+    color: #ccc;
+}
+
+.rating-number {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* ----------------- FORMULARIO DE PAQUETES (ADMIN) ----------------- */
+
+.form-admin-container {
+    padding: 2rem;
+    background: var(--light-bg);
+    border-radius: 10px;
+    max-width: 1000px;
+    margin: auto;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 25px;
+}
+
+.form-admin-container .heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--main-color);
+}
+
+.form-admin-container .form-admin {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas */
+    gap: 1.5rem;
+    width: 100%;
+    grid-auto-rows: auto;
+    margin-top: 15px;
+}
+.form-admin-container .form-admin .inputBox-paquetes {
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    font-size: 1.4rem;
+    margin-top: 15px;
+    
+}
+
+.form-admin-container .form-admin .inputBox-paquetes span {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+    color: var(--light-black);
+}
+
+.form-admin-container .form-admin .inputBox-paquetes input {
+    padding: 0.8rem 1rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+.form-admin-container .form-admin .inputBox select {
+    margin-top: 1rem; /* Esto moverá el select un poco más abajo */
+    height: 130%; /* Hace el select un 20% más ancho */
+}
+
+.paquete-title {
+    font-size: 1.8rem; /* Tamaño de la fuente */
+    font-weight: bold; /* Negrita */
+    color: var(--main-color); /* Color principal */
+    display: block;
+    margin-bottom: 1rem; /* Espacio debajo del título */
+    text-align: center; /* Centrado del texto */
+    border-bottom: 2px solid #ccc; /* Línea debajo del título */
+    padding-bottom: 0.5rem; /* Espacio entre el título y la línea */
+}
+
+.form-admin-container .form-admin .inputBox {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.form-admin-container .form-admin .inputBox span {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--light-black);
+}
+
+
+
+.form-admin-container .form-admin .inputBox input,
+.form-admin-container .form-admin .inputBox textarea {
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.4rem;
+    color: var(--light-black);
+    background-color: #fff;
+    margin-top: 0.5rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-admin-container .form-admin .inputBox input:focus,
+.form-admin-container .form-admin .inputBox textarea:focus {
+    background: var(--black);
+    color: var(--white);
+    outline: none;
+    border-color: var(--main-color);
+}
+
+.form-admin-container .form-admin .inputBox input[type="file"] {
+    background-color: transparent;
+    border: none;
+    color: var(--main-color);
+}
+
+/* Estilos para las tablas */
+.table {
+    width: 100%;
+    table-layout: fixed; /* Fija el tamaño de las celdas */
+}
+
+.table td {
+    padding: 10px;
+    border: none;
+    vertical-align: middle; /* Alinea verticalmente */
+    width: 33%; /* Fija el ancho de las celdas de la tabla (ajústalo según necesites) */
+}
+
+/* Estilos para los checkboxes */
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: flex-start;
+}
+
+.form-check-label {
+    margin-bottom: 0; /* Asegura que no haya espacio extra debajo */
+    font-size: 14px;   /* Ajusta tamaño si es necesario */
+    min-width: 90px;   /* Fuerza que todos los labels tengan el mismo ancho */
+    display: inline-block;
+}
+
+/* Estilo para los checkboxes */
+.form-check-input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #00bcd4; /* Puedes cambiarlo a cualquier color si deseas */
+}
+
+#availability {
+    margin-left: -350px; /* Ajusta el valor negativo según sea necesario */
+}
+
+/* Ajuste responsivo para pantallas más pequeñas */
+@media (max-width: 768px) {
+    #availability {
+        margin-left: 0;  /* Elimina el margen negativo en pantallas pequeñas */
+    }
+}
+
+
+
+
+.form-admin-container .form-admin .btn {
+    margin-top: 2rem;
+    padding: 1.2rem 2.4rem;
+    font-size: 1.6rem;
+    background-color: var(--main-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: flex-end;
+}
+
+.form-admin-container .form-admin .btn:hover {
+    background-color: var(--black);
+    transform: scale(1.05);
+}
+
+/* Previsualización de la imagen */
+.form-admin-container .form-admin .inputBox img {
+    max-height: 150px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+}
+
+/* Estilos para el texto de validación (si se usa) */
+.form-admin-container .error-message {
+    color: red;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* Descripción ocupa 2 columnas y 2 filas */
+.inputBox.descripcion {
+    grid-column: span 3; /* Ocupa las 3 columnas */
+    margin-bottom: 1.5rem;
+}
+
+
+
+
+/* Textarea más alto por defecto */
+textarea {
+    min-height: 150px;
+}
+
+
+
+/* Para asegurar que el formulario se vea bien en pantallas más pequeñas */
+@media (max-width: 768px) {
+    .form-admin-container .form-admin {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+    }
+
+  
+
+    .paquete-box {
+        width: 100%; /* Los paquetes ocupan el 100% en pantallas pequeñas */
+    }
+}
+
+
+
+
+/* ---MODAL DE MENSAJE--- */
+
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4); /* Negro translúcido */
+    z-index: 9998;
+}
+#modal-message {
+    display: flex; /* Mostrado cuando es necesario */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--main-color, #333); /* Fallback por si no está definida */
+    padding: 40px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    z-index: 9999;
+    width: 80%;
+    max-width: 500px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilo para el botón de cerrar (la X) */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #ccc;
+}
+
+/* Estilo para el contenido */
+#modal-message h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+#modal-message p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: white;
+}
+
+#modal-message button {
+    padding: 12px 24px;
+    background-color: var(--black, #000);
+    color: var(--white, #fff);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+#modal-message button:hover {
+    background-color: white;
+    color: black;
+}
+/* -----------------PAGINA DE BOOKING---------------*/
+
+.booking .booking-form {
+    padding: 2rem;
+    background: var(--light-bg);
+}
+.booking .booking-form .flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.booking .booking-form .flex .inputBox {
+    flex: 1 1 41rem;
+}
+.booking .booking-form .flex .inputBox input {
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.6rem;
+    color: var(--light-black);
+    text-transform: none;
+    margin-top: 1.5rem;
+    border: 2px solid #ccc;
+}
+.booking .booking-form .flex .inputBox input:focus {
+    /* Cambia el fondo y color de texto al enfocar el input */
+    background: var(--black);
+    color: var(--white);
+}
+.booking .booking-form .flex .inputBox input:focus::placeholder {
+    /* Cambia el color del placeholder cuando el input tiene foco */
+    color: var(--light-white);
+}
+.booking .booking-form .flex .inputBox span {
+    font-size: 1.5rem;
+    color: var(--light-black);
+}
+/* Espaciado superior para el botón del formulario de reserva */
+.booking .booking-form .btn {
+    margin-top: 2rem;
+}
+
+
+/* ---MODAL DE MENSAJE--- */
+
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4); /* Negro translúcido */
+    z-index: 9998;
+}
+#modal-message {
+    display: flex; /* Mostrado cuando es necesario */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--main-color, #333); /* Fallback por si no está definida */
+    padding: 40px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    z-index: 9999;
+    width: 80%;
+    max-width: 500px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilo para el botón de cerrar (la X) */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #ccc;
+}
+
+/* Estilo para el contenido */
+#modal-message h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+#modal-message p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: white;
+}
+
+#modal-message button {
+    padding: 12px 24px;
+    background-color: var(--black, #000);
+    color: var(--white, #fff);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+#modal-message button:hover {
+    background-color: white;
+    color: black;
+}
+
+
+
+/*--------------- ESTILOS BOOKING-LIST ---------------*/
+/* Estilos comunes para las tablas en toda la aplicación */
+
+h1 {
+    text-align: center;
+    margin-top: 30px; /* Espacio desde el top */
+    padding-top: 20px;
+    font-size: 3.5rem;
+    color: var(--black);
+}
+
+table {
+    width: 100%;
+    margin-top: 3.5rem;
+    margin-bottom: 4rem;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    font-size: 1.5rem; /* Aumenta el tamaño de la fuente dentro de las celdas */
+}
+
+table th {
+    background-color: var(--main-color); /* Asegúrate de que esta variable esté definida */
+    color: #fff;
+    padding: 2rem 3rem;  /* Aumentamos el relleno horizontal para hacerlo más ancho */
+    font-size: 16px;
+}
+
+table tr:nth-child(even) {
+    background-color: var(--light-bg); /* Fondo alterno para las filas */
+}
+
+/* Agregar un pequeño efecto de hover en las filas */
+table tr:hover {
+    background-color: var(--hover-bg, #f1f1f1); /* Fondo de hover */
+}
+
+/* Estilo específico para la columna de ID */
+table td:nth-child(1), table th:nth-child(1) {
+    padding-left: 20px; /* Añadir un pequeño relleno a la izquierda de la columna de ID */
+}
+/* Estilo para el botón de eliminar */
+.btn-eliminar {
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    background: linear-gradient(45deg, #e74c3c, #c0392b); /* Gradiente rojo */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.4s ease, transform 0.3s ease;
+}
+
+/* Efecto de hover */
+.btn-eliminar:hover {
+    background: linear-gradient(45deg, #c0392b, #e74c3c); /* Gradiente invertido en hover */
+    transform: scale(1.1); /* Agrandar el botón al pasar el ratón */
+}
+
+/* Efecto de foco */
+.btn-eliminar:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(231, 76, 60, 0.8); /* Sombra más fuerte al hacer foco */
+}
+
+
+
+/* --------------- ESTILOS USER-DETAILS --------------- */
+
+.user-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: var(--light-bg);
+}
+
+.user-card {
+    max-width: 600px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px; /* Esquinas redondeadas más suaves */
+    box-shadow: 0 0 30px rgba(41, 128, 185, 0.5); /* Efecto luminoso con sombra más visible */
+    text-align: center;
+    position: relative;
+    border: 3px solid transparent; /* Definir borde transparente para aplicar la imagen del borde */
+    background-clip: padding-box; /* Asegura que el borde no se superponga con el contenido */
+    background: radial-gradient(circle, var(--main-color), #2980b9) padding-box, #fff; /* Gradiente desde el centro */
+}
+
+.user-card .foto {
+    margin-bottom: 20px;
+}
+
+.user-card .foto-perfil {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--main-color);
+}
+
+.user-card h2 {
+    font-size: 2rem;
+    color: var(--black);
+    margin-bottom: 10px;
+    color: white;
+}
+
+.user-card p {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin: 8px;
+    margin-top: 25px;
+}
+
+/* Botones */
+.user-card .btn-editar,
+.user-card .btn-eliminar {
+    display: inline-block;
+    margin: 15px 10px 0;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.user-card .btn-editar {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+}
+
+.user-card .btn-editar:hover {
+    background: linear-gradient(45deg, #2980b9, #3498db);
+    transform: scale(1.05);
+}
+
+.user-card .btn-eliminar {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.user-card .btn-eliminar:hover {
+    background: linear-gradient(45deg, #c0392b, #e74c3c);
+    transform: scale(1.05);
+}
+
+/* Botón volver a la lista - coherente con tu diseño */
+.volver-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 4rem;
+}
+
+.btn-volver {
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    background: linear-gradient(45deg, var(--main-color), #2980b9); /* Sustituye si tienes otro color */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.4s ease, transform 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-volver:hover {
+    background: linear-gradient(45deg, #2980b9, var(--main-color));
+    transform: scale(1.05);
+}
+
+
+
+/*------- Modal general------ */
+.modal {
+    display: none; /* Ocultar por defecto */
+    position: fixed;
+    z-index: 1000; /* Asegúrate de que el modal esté por encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro con opacidad */
+}
+
+/* Contenido del modal */
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrado en la pantalla */
+    width: 80%; /* Ajustamos el ancho del modal (puedes cambiarlo si lo deseas) */
+    max-width: 700px; /* Máximo tamaño para el modal */
+    padding: 40px; /* Aumentar el padding para hacerlo más grande */
+    background-color: var(--main-color);
+    border-radius: 10px; /* Bordes redondeados */
+    box-sizing: border-box;
+    text-align: center; /* Centrar el contenido dentro del modal */
+}
+
+/* Estilo para el título */
+.modal-content h3 {
+    font-size: 28px; /* Aumentar el tamaño de la fuente */
+    margin-bottom: 20px; /* Separar el título de los botones */
+    color: white;
+}
+
+/* Estilo de los botones */
+.modal-content button {
+    padding: 15px 30px; /* Botones más grandes */
+    background-color: var(--black); /* Color de fondo del botón */
+    color: white; /* Color de texto del botón */
+    text-transform: capitalize;
+    border-radius: 8px; /* Bordes redondeados en el botón */
+    border: none;
+    font-size: 18px; /* Aumentar tamaño del texto */
+    margin: 10px; /* Espacio entre los botones */
+    cursor: pointer;
+}
+
+/* Efecto hover para los botones */
+.modal-content button:hover {
+    background-color: white; /* Fondo blanco al pasar el mouse */
+    color: black; /* Color de texto negro */
+}
+
+/* Estilo del botón de cerrar */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+}
+
+
+
+
+/*-------ESTILOS PARA USER-LIST (LISTADO DE USUARIOS)------ *
+
+
+/* Estilo para la sección de encabezado de la lista de usuarios */
+.heading-user-list {
+    background-size: cover !important;
+   /* Centra el fondo en el contenedor */
+   background-position: center !important;
+   /* Espacio interno en la parte superior */
+   padding-top: 10rem;
+   /* Espacio interno en la parte inferior */
+   padding-bottom: 15rem;
+   /* Uso de flexbox para centrar su contenido */
+   display: flex;
+   /* Centrado vertical de los elementos */
+   align-items: center;
+   /* Centrado horizontal de los elementos */
+   justify-content: center;
+}
+
+/* Estilos para el título principal dentro del encabezado */
+.heading-user-list h1 {
+    /* Tamaño muy grande para resaltar el título */
+    font-size: 45px;
+    /* Transforma el texto a mayúsculas */
+    text-transform: uppercase;
+    /* Color blanco para el texto */
+    color: var(--white);
+    /* Aplica sombra de texto para efecto de profundidad, reutilizando la variable de box-shadow */
+    text-shadow: var(--box-shadow);
+    text-align: center;
+}
+
+
+.usuarios-list {
+    padding: 2rem;
+    background: var(--light-bg);
+    border-radius: 1rem;
+    box-shadow: var(--box-shadow);
+    max-width: 1200px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+/* Título de la lista */
+.heading-title {
+    font-size: 3rem;
+    color: var(--main-color);
+    margin-bottom: 2rem;
+}
+
+/* Contenedor de tarjetas */
+.usuarios-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    background:transparent; /* O cualquier color de fondo sólido */
+    padding: 2rem;
+}
+
+/* Tarjeta de usuario */
+.usuario-card {
+    background: rgba(255, 255, 255, 0); /* Blanco con 50% de transparencia */
+    border-radius: 1rem;
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.usuario-card:hover {
+    transform: scale(1.05);
+}
+
+/* Foto de perfil */
+.foto-perfil {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--main-color);
+}
+
+/* Nombre del usuario */
+.usuario-card h2 {
+    font-size: 2rem;
+    color: var(--black);
+    margin-bottom: 1.5rem;
+}
+
+/* Contenedor de botones */
+.acciones {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Botones de acción */
+.btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-detalles {
+    background-color: var(--main-color);
+    color: var(--white);
+}
+
+.btn-detalles:hover {
+    background-color: #6a28a6;
+}
+
+.btn-eliminar {
+    background-color: #e74c3c;
+    color: var(--white);
+}
+
+.btn-eliminar:hover {
+    background-color: #c0392b;
+}
+
+
+
+
+/* ----------------PERFIL DE USUARIO-------------------- */
+
+/* Estructura de la imagen y los datos */
+.profile-flex { 
+    /* Activa el modelo de diseño Flexbox para alinear los elementos en fila */
+    display: flex;  
+    align-items: center; /* Alinea los elementos hijos verticalmente al centro */
+    gap: 30px; /* Espacio de 30px entre los elementos dentro del contenedor */
+    margin-left: 50px; /* Desplaza todo el contenido hacia la derecha con un margen de 50px */
+}
+
+/* Estilo para la imagen de perfil */
+.profile-image {
+    flex-shrink: 0; /* Evita que la imagen se reduzca si el espacio es limitado */
+    width: 300px; /* Establece un ancho fijo para la imagen */
+    height: 300px; /* Establece una altura fija para la imagen */
+    display: flex; /* Usa Flexbox dentro del contenedor de la imagen */
+    justify-content: center; /* Centra la imagen horizontalmente dentro del contenedor */
+    align-items: center; /* Centra la imagen verticalmente dentro del contenedor */
+    border: 2px solid var(--main-color); /* Borde de color principal de la página */
+    padding: 10px; /* Espacio entre la imagen y el borde */
+    border-radius: 5px; /* Bordes redondeados para el contenedor */
+    
+    /* Gradiente en el borde usando tonos morados */
+    border: 2px solid transparent; 
+    background-image: linear-gradient(45deg, rgba(142, 68, 173, 0.6), rgba(142, 68, 173, 0.4)); 
+    background-origin: border-box; /* Aplica el gradiente al borde */
+    background-clip: content-box, border-box; /* Asegura que el gradiente quede solo en el borde */
+
+    /* Efecto de sombra luminosa */
+    box-shadow: 0 0 15px rgba(142, 68, 173, 0.6), 0 0 20px rgba(142, 68, 173, 0.4); 
+}
+
+/* Estilo para la tarjeta que contiene los datos del usuario */
+.profile-card { 
+    background-color:transparent; /* Fondo blanco para la tarjeta */
+    padding: 20px; /* Espacio interior de 20px alrededor del contenido */
+    border-radius:none; /* Bordes redondeados para la tarjeta */
+   
+    width: 100%; /* Hace que la tarjeta ocupe todo el ancho disponible */
+    margin-left: 250px; /* Desplaza la tarjeta hacia la derecha con un margen de 250px */
+    margin-top: 20px;
+}
+
+/* Estilo para las cajas de entrada dentro de la tarjeta */
+.profile-card .profile-inputBox { 
+    margin-bottom: 15px; /* Espacio de 15px debajo de cada caja de entrada */
+    width: 100%; /* Hace que las cajas de entrada ocupen todo el ancho disponible */
+    display: flex; /* Usa Flexbox para alinear los elementos dentro de la caja */
+    align-items: center; /* Alinea verticalmente los elementos dentro de la caja */
+}
+
+/* Estilo para los títulos de usuario (usuario y apellidos) */
+.profile-card .profile-inputBox h1 { 
+    font-size: 3.5rem; /* Tamaño de la fuente para el nombre */
+    color: var(--main-color); /* Color principal de la página */
+    margin-left: 50px; /* Espacio de 30px a la izquierda del título */
+    margin-bottom: 15px; /*Espacion de 15px de abajo*/
+}
+
+/* Estilo para los labels dentro de las cajas de entrada */
+.profile-card .profile-inputBox span { 
+    font-weight: bold; /* Hace que el texto sea negrita */
+    display: block; /* Hace que el texto ocupe todo el espacio disponible */
+    margin-bottom: 5px; /* Espacio de 5px debajo del texto */
+    color: #000000; /* Color negro para el texto */
+    font-size: 22px; /* Tamaño de la fuente */
+    margin-top: 15px; /* Espacio de 15px encima del texto */
+}
+
+/* Estilo para los párrafos dentro de las cajas de entrada */
+.profile-card .profile-inputBox p { 
+    margin: 0; /* Elimina los márgenes por defecto */
+    font-size: 18px; /* Tamaño de la fuente */
+    color: #000000; /* Color negro para el texto */
+    margin-left: 15px; /* Espacio de 15px a la izquierda */
+    margin-top: 15px; /* Espacio de 15px encima del párrafo */
+}
+
+/* Estilo para los labels fuera de la tarjeta */
+.profile-inputBox span {
+    color: #333; /* Color gris oscuro */
+    font-size: 1.1rem; /* Tamaño de la fuente ligeramente mayor */
+}
+
+/* Estilo para los párrafos fuera de la tarjeta */
+.profile-inputBox p {
+    font-size: 1rem; /* Tamaño de la fuente */
+    color: #555; /* Color gris más claro */
+    margin: 5px 0; /* Márgenes de 5px arriba y abajo */
+}
+
+/* Estilo para la imagen de perfil */
+.profile-image img { 
+    width: 100%; /* Hace que la imagen ocupe todo el ancho disponible */
+    height: 100%; /* Hace que la imagen ocupe todo el alto disponible */
+    object-fit: cover; /* Ajusta la imagen para cubrir todo el área sin distorsionarla */
+    border-radius: 10px; /* Bordes redondeados para la imagen */
+}
+
+/* Estilos generales para las cajas de entrada */
+.profile-inputBox span {
+    color: #333; /* Color gris oscuro */
+    font-size: 1.1rem; /* Tamaño de la fuente */
+}
+
+.profile-inputBox p {
+    font-size: 1rem; /* Tamaño de la fuente */
+    color: #555; /* Color gris claro */
+    margin: 5px 0; /* Márgenes de 5px arriba y abajo */
+}
+
+
+
+
+
+
+/* Estilo para la tarjeta y sus contenidos */
+.inputBox span {
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.inputBox p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*-------- ESTILOS DEL FOOTER-------*/
+.footer {
+    /* Fondo con imagen, que no se repite, se ajusta al tamaño del contenedor, centrada y con efecto fijo */
+    background: url(../images/footer-bg.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+.footer .box-container {
+    display: grid;
+    /* Crea columnas responsivas con un ancho mínimo de 25rem */
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 3rem;
+}
+.footer .box-container .box h3 {
+    color: var(--white);
+    font-size: 2.5rem;
+    padding-bottom: 2rem;
+}
+.footer .box-container .box a {
+    color: var(--light-white);
+    font-size: 1.5rem;
+    padding-bottom: 1.5rem;
+    display: block;
+}
+.footer .box-container .box a i {
+    color: var(--main-color);
+    padding-right: .5rem;
+    transition: .2s linear;
+}
+.footer .box-container .box a:hover i { 
+    /* Al pasar el mouse, aumenta el padding para crear un efecto de desplazamiento */
+    padding-right: 2rem;
+}
+
+
+
+/* ===================================================== */
+/*                    MEDIA QUERIES                    */
+/* ===================================================== */
+
+/* Para pantallas con un ancho máximo de 1200px */
+@media(max-width:1200px) {
+    section {
+        /* Ajusta el padding para que sea proporcional al ancho reducido */
+        padding: 3rem 5%;
+    }
+}
+
+/* Para pantallas con un ancho máximo de 991px */
+@media(max-width:991px) {
+    html {
+        /* Reduce el tamaño base de fuente para dispositivos medianos */
+        font-size: 55%;
+    }
+    section {
+        /* Ajusta el padding para pantallas medianas */
+        padding: 3rem 2rem;
+    }
+    .home .slide .content h3 {
+        /* Ajusta el tamaño del encabezado en slides para mantener la responsividad */
+        font-size: 10vw;
+    }
+}
+
+/* Para pantallas con un ancho máximo de 768px (tablets y móviles) */
+@media(max-width:768px) {
+    #menu-btn {
+        /* Muestra el botón de menú para activar el navbar en móviles */
+        display: inline-block;
+        transition: .2s linear;
+    }
+    #menu-btn.fa-times {
+       /* Rota el icono del menú 180 grados cuando se activa (por ejemplo, para indicar que se cierra) */
+       transform: rotate(180deg);
+    }
+    .header .navbar {
+        /* Posiciona el navbar de forma absoluta justo debajo de la cabecera */
+        position: absolute;
+        top: 99%; left: 0; right: 0;
+        /* Fondo blanco para el menú desplegable */
+        background-color: var(--white);
+        /* Borde superior para separarlo visualmente */
+        border-top: var(--border);
+        padding: 2rem;
+        /* Utiliza clip-path para ocultar inicialmente el contenido del menú */
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+    .header .navbar.active {
+        /* Cuando el menú se activa, el clip-path se extiende para mostrar todo el contenido */
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    .header .navbar a {
+        /* Los enlaces del menú se muestran como bloques centrados con márgenes */
+        display: block;
+        margin: 2rem;
+        text-align: center;
+    }
+}
+
+/* Para pantallas con un ancho máximo de 450px (móviles pequeños) */
+@media(max-width:450px) {
+    html {
+        /* Se reduce aún más el tamaño base de fuente */
+        font-size: 50%;
+    }
+    .heading-title {
+        /* Ajusta el tamaño del título para adaptarse a la pantalla pequeña */
+        font-size: 3.5rem;
+    }
+}
+
+/* ---- FORMULARIO USUARIO-------- */
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    .form-container {
+        flex-direction: column; /* Acomoda los inputs en una sola columna */
+    }
+    
+    .inputBox {
+        flex: 1 1 100%; /* Los inputs ocupan todo el ancho disponible */
+    }
+    
+    .btn {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 450px) {
+    .form-section {
+        padding: 2rem 1rem;
+    }
+    
+    .inputBox input {
+        font-size: 1.4rem;
+        padding: 1rem;
+    }
+    
+    .btn {
+        font-size: 1.4rem;
+    }
+}
+
+/* ------MI PERFIL-------- */
+/* Media Query para pantallas de 768px o menos (tabletas y móviles en orientación horizontal) */
+@media (max-width: 768px) {
+    .profile-flex {
+        flex-direction: column; /* Cambia la dirección del Flexbox para apilar los elementos verticalmente */
+        margin-left: 20px; /* Menos margen en pantallas más pequeñas */
+        gap: 20px; /* Reduce el espacio entre los elementos */
+    }
+
+    .profile-card {
+        margin-left: 0; /* Elimina el margen izquierdo para pantallas pequeñas */
+        padding: 15px; /* Menos relleno en pantallas más pequeñas */
+    }
+
+    .profile-image {
+        width: 200px; /* Reducción del tamaño de la imagen */
+        height: 200px; /* Reducción del tamaño de la imagen */
+    }
+
+    .profile-card .profile-inputBox h1 {
+        font-size: 2rem; /* Reducción del tamaño de los títulos */
+    }
+
+    .profile-card .profile-inputBox span {
+        font-size: 16px; /* Reducción del tamaño de la fuente de los labels */
+    }
+
+    .profile-card .profile-inputBox p {
+        font-size: 14px; /* Reducción del tamaño de la fuente de los párrafos */
+    }
+}
+
+/* Media Query para pantallas de 480px o menos (móviles en orientación vertical) */
+@media (max-width: 480px) {
+    .profile-flex {
+        margin-left: 10px; /* Menos margen en pantallas muy pequeñas */
+        gap: 15px; /* Reduce aún más el espacio entre los elementos */
+    }
+
+    .profile-image {
+        width: 180px; /* Imagen aún más pequeña en dispositivos muy pequeños */
+        height: 180px; /* Imagen aún más pequeña en dispositivos muy pequeños */
+    }
+
+    .profile-card {
+        margin-left: 0; /* Elimina el margen izquierdo */
+        padding: 10px; /* Reduce el relleno de la tarjeta */
+    }
+
+    .profile-card .profile-inputBox h1 {
+        font-size: 1.5rem; /* Disminuye aún más el tamaño del nombre */
+    }
+
+    .profile-card .profile-inputBox span {
+        font-size: 14px; /* Disminuye el tamaño de los labels */
+    }
+
+    .profile-card .profile-inputBox p {
+        font-size: 12px; /* Disminuye el tamaño de los párrafos */
+    }
+}
+
+/* -----BOOKING-LIST------ */
+/* Estilos para dispositivos pequeños (máximo 768px) */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto; /* Desplazamiento horizontal */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table th, table td {
+        font-size: 1.2rem; /* Reducir el tamaño de la fuente en tablas */
+        padding: 0.8rem; /* Reducir el padding */
+    }
+
+    table th {
+        font-size: 14px; /* Ajustar tamaño de fuente en cabecera */
+    }
+
+    /* Asegurarse de que la columna de acción no se oculte */
+    table td:last-child, table th:last-child {
+        width: 120px; /* Ajustar el tamaño de la columna de acción */
+        word-wrap: break-word; /* Asegurarse de que el texto no se quede fuera del área visible */
+    }
+
+    /* Ajustar el tamaño del botón de eliminar */
+    .btn-eliminar {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+
+    /* Ajustar el tamaño del modal */
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .modal-content h3 {
+        font-size: 24px;
+    }
+
+    .modal-content button {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+
+    /* Ajustar el tamaño de los botones del modal */
+    .close {
+        font-size: 24px;
+    }
+}
+
+/* Estilos para dispositivos muy pequeños (máximo 480px) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto; /* Desplazamiento horizontal para la tabla */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table th, table td {
+        font-size: 1rem; /* Reducir aún más el tamaño de la fuente */
+        padding: 0.6rem;
+    }
+
+    table th {
+        font-size: 12px;
+    }
+
+    /* Asegurar que la columna de acción no se oculte */
+    table td:last-child, table th:last-child {
+        width: 100px; /* Ajustar el ancho de la columna de acción */
+    }
+
+    .btn-eliminar {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+
+    /* Ajustes en el modal */
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .modal-content h3 {
+        font-size: 20px;
+    }
+
+    .modal-content button {
+        font-size: 14px;
+        padding: 10px 18px;
+    }
+
+    .close {
+        font-size: 22px;
+    }
+}
