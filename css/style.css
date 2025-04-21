@@ -1899,9 +1899,15 @@ textarea {
 }
 /* -----------------PAGINA DE BOOKING---------------*/
 
+.booking .heading-title {
+    margin-top: -20px; 
+    margin-bottom: 25px;
+}
+
 .booking .booking-form {
     padding: 2rem;
     background: var(--light-bg);
+    
 }
 .booking .booking-form .flex {
     display: flex;
@@ -1911,7 +1917,8 @@ textarea {
 .booking .booking-form .flex .inputBox {
     flex: 1 1 41rem;
 }
-.booking .booking-form .flex .inputBox input {
+.booking .booking-form .flex .inputBox input,
+.booking .booking-form .flex .inputBox select {
     width: 100%;
     padding: 1.2rem 1.4rem;
     font-size: 1.6rem;
@@ -1919,8 +1926,11 @@ textarea {
     text-transform: none;
     margin-top: 1.5rem;
     border: 2px solid #ccc;
+    min-height: 4.6rem; /* Fuerza la misma altura para todos */
+    box-sizing: border-box;
 }
-.booking .booking-form .flex .inputBox input:focus {
+.booking .booking-form .flex .inputBox input:focus,
+.booking .booking-form .flex .inputBox select:focus {
     /* Cambia el fondo y color de texto al enfocar el input */
     background: var(--black);
     color: var(--white);
@@ -1934,9 +1944,20 @@ textarea {
     color: var(--light-black);
 }
 /* Espaciado superior para el botón del formulario de reserva */
-.booking .booking-form .btn {
+.booking .booking-form .button-container {
+    width: 100%;
+    text-align: center;
     margin-top: 2rem;
 }
+
+.booking .booking-form .btn {
+    padding: 1.4rem 3rem;
+    font-size: 1.8rem;
+    border-radius: 1rem;
+    display: inline-block;
+}
+
+
 
 
 /* ---MODAL DE MENSAJE--- */

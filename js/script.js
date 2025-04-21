@@ -109,3 +109,36 @@ document.addEventListener('DOMContentLoaded', function () {
    
   
 });
+
+// Para la fecha en booking.
+
+document.addEventListener('DOMContentLoaded', function () {
+    const arrivalsInput = document.getElementById('arrivals');
+    const leavingInput = document.getElementById('leaving');
+    const durationSelect = document.getElementById('duracion_paquete_id');
+
+    // Función para calcular y establecer la fecha de fin
+    function setLeavingDate() {
+        const arrivalsDate = new Date(arrivalsInput.value);
+        const selectedDuration = durationSelect.selectedOptions[0]?.dataset?.duration;
+
+        // Solo actualizamos si tenemos una fecha de inicio y una duración seleccionada
+        if (arrivalsDate && selectedDuration) {
+            // Asegurarse de que la duración sea un número entero
+            const durationDays = parseInt(selectedDuration);
+            if (!isNaN(durationDays)) {
+                // Sumar los días seleccionados a la fecha de inicio
+                arrivalsDate.setDate(arrivalsDate.getDate() + durationDays);
+
+                // Establecer la nueva fecha de fin en el campo correspondiente
+                leavingInput.value = arrivalsDate.toISOString().split('T')[0]; // Formato yyyy-mm-dd
+            }
+        }
+    }
+
+    // Detectar cuando cambie la fecha de inicio
+    arrivalsInput.addEventListener('change', setLeavingDate);
+
+    // Detectar cuando cambie la duración
+    durationSelect.addEventListener('change', setLeavingDate);
+});

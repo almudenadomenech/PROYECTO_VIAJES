@@ -30,6 +30,22 @@ $packages_result = mysqli_query($link, $packages_query);
 $duraciones_query = "SELECT id, paquete_id, duracion, precio FROM duraciones_paquete";
 $duraciones_result = mysqli_query($link, $duraciones_query);
 
+// CONSULTA PARA OBTENER EL NOMBRE Y LA UBICACIÓN DEL PAQUETE SELECCIONADO
+$package_name = "No se seleccionó ningún paquete";
+$package_location = "";
+
+if (isset($_GET['id'])) {
+    $package_id = $_GET['id'];
+
+    $package_query = "SELECT nombre, location FROM paquetes WHERE id = '$package_id'";
+    $package_result = mysqli_query($link, $package_query);
+    if ($package_result && mysqli_num_rows($package_result) > 0) {
+        $package_data = mysqli_fetch_assoc($package_result);
+        $package_name = $package_data['nombre'];
+        $package_location = $package_data['location'];
+    }
+}
+
 // Verificar si el formulario fue enviado
 if (isset($_POST['send'])) {
     // Obtener los datos del formulario
@@ -79,6 +95,7 @@ if (isset($_POST['send'])) {
 }
 ?>
 
+
 <!-- swiper css link -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
@@ -86,9 +103,10 @@ if (isset($_POST['send'])) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../css/style.css">
 
-<div class="heading" style="background:url(../images/header-3.jpg) no-repeat">
-    <h1>Reserva ahora</h1>
+<div class="heading" style="background:url(../images/user-list.jpg) no-repeat">
+    <h1><?= htmlspecialchars($package_location ?: 'Reserva ahora') ?></h1>
 </div>
+
 
 <!-- Sección de formulario de reserva -->
 <section class="booking">
@@ -154,46 +172,43 @@ if (isset($_POST['send'])) {
             ?>
             <input type="text" value="<?= htmlspecialchars($package_name) ?>" disabled>
         </div>
-          <!-- Selección de duración y precio -->
-          <div class="inputBox">
-            <span>Duración y precio:</span>
-            <select name="duracion_paquete_id" required>
-                <option value="">Selecciona Paquete y precio</option>
-                <?php
-                // Asegúrate de que tienes el ID del paquete
-                if (isset($package_id)) {
-                    // Obtener las duraciones y precios del paquete seleccionado
-                    $query = "
-                        SELECT dp.id, dp.duracion, dp.precio 
-                        FROM duraciones_paquete dp
-                        WHERE dp.paquete_id = '$package_id'";  // Filtrar por el paquete seleccionado
+         <!-- Selección de duración y precio -->
+<div class="inputBox">
+    <span>Duración y precio:</span>
+    <select name="duracion_paquete_id" id="duracion_paquete_id" required>
+        <option value="">Selecciona Paquete y precio</option>
+        <?php
+        if (isset($package_id)) {
+            $query = "
+                SELECT dp.id, dp.duracion, dp.precio 
+                FROM duraciones_paquete dp
+                WHERE dp.paquete_id = '$package_id'";
 
-                    $result = mysqli_query($link, $query);
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<option value='{$row['id']}'>Paquete: {$row['duracion']} días - €" . number_format($row['precio'], 2) . "</option>";
-                    }
-                }
-                ?>
-            </select>
-        </div>
-            <!-- Fecha de inicio -->
-            <div class="inputBox">
-                <span>Fecha inicio:</span>
-                <input type="date" name="arrivals" required>
-            </div>
+            $result = mysqli_query($link, $query);
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<option value='{$row['id']}' data-duration='{$row['duracion']}'>Paquete: {$row['duracion']} días - €" . number_format($row['precio'], 2) . "</option>";
+            }
+        }
+        ?>
+    </select>
+</div>
 
-            <!-- Fecha de fin -->
-            <div class="inputBox">
-                <span>Fecha fin:</span>
-                <input type="date" name="leaving" required>
-            </div>
-        </div>
+<!-- Fecha de inicio -->
+<div class="inputBox">
+    <span>Fecha inicio:</span>
+    <input type="date" id="arrivals" name="arrivals" required>
+</div>
 
-       
+<!-- Fecha de fin -->
+<div class="inputBox">
+    <span>Fecha fin:</span>
+    <input type="date" id="leaving" name="leaving" required readonly>
+</div>
 
-      
+<div class="button-container">
+    <input type="submit" value="Enviar" class="btn" name="send">
+</div>
 
-        <input type="submit" value="Enviar" class="btn" name="send">
     </form>
 </section>
 
