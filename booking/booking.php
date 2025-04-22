@@ -149,65 +149,100 @@ if (isset($_POST['send'])) {
                 <span>Número de personas:</span>
                 <input type="number" placeholder="Introduce número de personas" name="guest" required>
             </div>
- <!-- Selección de paquete (ya mostrado) -->
- <div class="inputBox">
-            <span>Paquete seleccionado:</span>
-            <?php
-            // Obtener el paquete seleccionado
-            if (isset($_GET['id'])) {
-                $package_id = $_GET['id'];
+            
+            <!-- Selección de paquete (ya mostrado) -->
+            <div class="inputBox">
+                <span>Paquete seleccionado:</span>
+                <?php
+                // Obtener el paquete seleccionado
+                if (isset($_GET['id'])) {
+                    $package_id = $_GET['id'];
 
-                // Consultar el nombre del paquete
-                $package_query = "SELECT nombre FROM paquetes WHERE id = '$package_id'";
-                $package_result = mysqli_query($link, $package_query);
-                if ($package_result && mysqli_num_rows($package_result) > 0) {
-                    $package_data = mysqli_fetch_assoc($package_result);
-                    $package_name = $package_data['nombre'];
+                    // Consultar el nombre del paquete
+                    $package_query = "SELECT nombre FROM paquetes WHERE id = '$package_id'";
+                    $package_result = mysqli_query($link, $package_query);
+                    if ($package_result && mysqli_num_rows($package_result) > 0) {
+                        $package_data = mysqli_fetch_assoc($package_result);
+                        $package_name = $package_data['nombre'];
+                    } else {
+                        $package_name = "Paquete no encontrado";
+                    }
                 } else {
-                    $package_name = "Paquete no encontrado";
+                    $package_name = "No se seleccionó ningún paquete";
                 }
-            } else {
-                $package_name = "No se seleccionó ningún paquete";
-            }
-            ?>
-            <input type="text" value="<?= htmlspecialchars($package_name) ?>" disabled>
+                ?>
+                <input type="text" value="<?= htmlspecialchars($package_name) ?>" disabled>
+            </div>
+            
+            
+
+            <!-- Selección de duración y precio -->
+            <div class="inputBox">
+                <span>Duración y precio:</span>
+                <select name="duracion_paquete_id" id="duracion_paquete_id" required>
+                    <option value="">Selecciona Paquete y precio</option>
+                    <?php
+                    if (isset($package_id)) {
+                        $query = "
+                            SELECT dp.id, dp.duracion, dp.precio 
+                            FROM duraciones_paquete dp
+                            WHERE dp.paquete_id = '$package_id'";
+
+                        $result = mysqli_query($link, $query);
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<option value='{$row['id']}' data-duration='{$row['duracion']}'>Paquete: {$row['duracion']} días - €" . number_format($row['precio'], 2) . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <!-- Fecha de inicio -->
+            <div class="inputBox">
+                <span>Fecha inicio:</span>
+                <input type="date" id="arrivals" name="arrivals" required>
+            </div>
+
+            <!-- Fecha de fin -->
+            <div class="inputBox">
+                <span>Fecha fin:</span>
+                <input type="date" id="leaving" name="leaving" required readonly>
+            </div>
         </div>
-         <!-- Selección de duración y precio -->
-<div class="inputBox">
-    <span>Duración y precio:</span>
-    <select name="duracion_paquete_id" id="duracion_paquete_id" required>
-        <option value="">Selecciona Paquete y precio</option>
-        <?php
-        if (isset($package_id)) {
-            $query = "
-                SELECT dp.id, dp.duracion, dp.precio 
-                FROM duraciones_paquete dp
-                WHERE dp.paquete_id = '$package_id'";
+<!-- Sección de Pago y Descuento -->
+<section class="payment-section">
+                <!-- Mostrar el precio total -->
+                <div class="inputBox">
+                    <span>Precio total:</span>
+                    <input type="text" id="total-price" value="€0.00" disabled>
+                </div>
 
-            $result = mysqli_query($link, $query);
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<option value='{$row['id']}' data-duration='{$row['duracion']}'>Paquete: {$row['duracion']} días - €" . number_format($row['precio'], 2) . "</option>";
-            }
-        }
-        ?>
-    </select>
-</div>
+                <!-- Campo para aplicar descuento -->
+                <div class="inputBox">
+                    <span>Código de descuento:</span>
+                    <input type="text" id="discount-code" placeholder="Introduce tu código de descuento">
+                </div>
 
-<!-- Fecha de inicio -->
-<div class="inputBox">
-    <span>Fecha inicio:</span>
-    <input type="date" id="arrivals" name="arrivals" required>
-</div>
+                <!-- Botón para aplicar el descuento -->
+                <div class="inputBox">
+                    <button type="button" id="apply-discount" onclick="applyDiscount()">Aplicar descuento</button>
+                </div>
 
-<!-- Fecha de fin -->
-<div class="inputBox">
-    <span>Fecha fin:</span>
-    <input type="date" id="leaving" name="leaving" required readonly>
-</div>
+                <!-- Mostrar el total después del descuento -->
+                <div class="inputBox">
+                    <span>Precio después del descuento:</span>
+                    <input type="text" id="discounted-price" value="€0.00" disabled>
+                </div>
 
-<div class="button-container">
-    <input type="submit" value="Enviar" class="btn" name="send">
-</div>
+                <!-- Botón de pago -->
+                <div class="button-container">
+                    <button type="button" id="pay-button" onclick="processPayment()">Simular pago</button>
+                </div>
+            </section>
+        <!-- Botón de enviar -->
+        <div class="button-container">
+            <input type="submit" value="Enviar" class="btn" name="send">
+        </div>
 
     </form>
 </section>
@@ -223,6 +258,9 @@ if (isset($_POST['send'])) {
     </div>
 </div>
 <?php endif; ?>
+
+
+
 
 
 <!-- Footer -->

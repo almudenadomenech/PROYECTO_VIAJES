@@ -2168,7 +2168,7 @@ textarea {
     background-color: white;
     color: black;
 }
-/* -----------------PAGINA DE BOOKING---------------*/
+/* -----------------PAGINA DE booking---------------*/
 
 .booking .heading-title {
     margin-top: -20px; 
@@ -2314,6 +2314,120 @@ textarea {
 #modal-message button:hover {
     background-color: white;
     color: black;
+}
+
+/* Contenedor para la sección de pago y descuento */
+.payment-section {
+    width: 60%; /* Incrementamos un poco el ancho */
+    max-width: 800px; /* Máximo tamaño para pantallas grandes */
+    padding: 2rem;
+    background-color: #f9f9f9; /* Color de fondo más suave */
+    margin: 2rem auto; /* Centrado del contenedor */
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Sombra más suave */
+    box-sizing: border-box; /* Para asegurarse de que el padding no afecte el tamaño total */
+    font-family: 'Arial', sans-serif;
+}
+/* Estilo para los 'span' de los títulos */
+.payment-section .inputBox span {
+    display: block;  /* Hace que los 'span' ocupen una línea completa */
+    font-size: 1.6rem; /* Tamaño de fuente más grande */
+    font-weight: 600; /* Fuente más fuerte */
+    color: #333; /* Color de texto oscuro para buena legibilidad */
+    margin-bottom: 0.8rem; /* Espacio entre el texto y el input */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre las letras para mayor legibilidad */
+}
+
+/* Estilo para los 'span' de los títulos cuando el input tiene foco */
+.payment-section .inputBox input:focus + span {
+    color: #007bff; /* Cambia el color del texto al azul cuando el campo está enfocado */
+}
+
+/* Estilo para los 'span' en campos con 'placeholder' */
+.payment-section .inputBox input::placeholder {
+    font-style: italic; /* Hace que el placeholder sea en cursiva */
+    color: #aaa; /* Color suave para el texto del placeholder */
+}
+
+/* Estilo para los campos de precio total y descuento */
+.payment-section .inputBox input#total-price,
+.payment-section .inputBox input#discounted-price {
+    background-color: #fff;
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: #333;
+    padding: 1rem 1.5rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    min-height: 4rem;
+    width: 100%;
+    margin-bottom: 1.5rem; /* Espaciado entre campos */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Estilo para el campo de código de descuento */
+.payment-section .inputBox #discount-code {
+    font-size: 1.rem;
+    padding: 1rem 1.5rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    min-height: 4rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+/* Efecto de enfoque para los campos de entrada */
+.payment-section .inputBox input:focus,
+.payment-section .inputBox select:focus {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+    outline: none;
+}
+
+/* Estilo para el botón de aplicar descuento */
+.payment-section .inputBox #apply-discount {
+    padding: 1rem 2rem;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover del botón de aplicar descuento */
+.payment-section .inputBox #apply-discount:hover {
+    background-color: #218838;
+}
+
+/* Estilo para el botón de pago */
+.payment-section .button-container #pay-button {
+    padding: 1.2rem 2.4rem;
+    font-size: 1.6rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+/* Hover del botón de pago */
+.payment-section .button-container #pay-button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para el texto informativo en la sección de pago */
+.payment-section .inputBox span {
+    font-size: 1.2rem;
+    color: #777;
+    display: block;
+    margin-top: 0.5rem;
 }
 
 

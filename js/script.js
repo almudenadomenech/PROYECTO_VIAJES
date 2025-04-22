@@ -142,3 +142,47 @@ document.addEventListener('DOMContentLoaded', function () {
     // Detectar cuando cambie la duración
     durationSelect.addEventListener('change', setLeavingDate);
 });
+
+
+// PASARELA DE PAGO
+
+// Función para aplicar el descuento
+function applyDiscount() {
+    const discountCode = document.getElementById('discount-code').value;
+    let totalPrice = parseFloat(document.getElementById('total-price').value.replace('€', '').replace(',', '.'));
+    let discount = 0;
+
+    // Lógica para aplicar descuento (puedes modificar esto según tus necesidades)
+    if (discountCode === 'DESCUENTO10') {
+        discount = 0.10; // 10% de descuento
+    } else if (discountCode === 'DESCUENTO20') {
+        discount = 0.20; // 20% de descuento
+    }
+
+    // Aplicar el descuento
+    const discountedPrice = totalPrice - (totalPrice * discount);
+
+    // Mostrar el precio después del descuento
+    document.getElementById('discounted-price').value = '€' + discountedPrice.toFixed(2);
+}
+
+// Función para simular el pago
+function processPayment() {
+    const discountedPrice = parseFloat(document.getElementById('discounted-price').value.replace('€', '').replace(',', '.'));
+    
+    if (discountedPrice <= 0) {
+        alert("Por favor, asegúrate de que el precio total sea mayor a 0.");
+        return;
+    }
+
+    // Simular un proceso de pago
+    const paymentSuccess = Math.random() > 0.2; // Simulamos un 80% de éxito en el pago
+
+    if (paymentSuccess) {
+        alert("¡Pago realizado con éxito! Gracias por tu compra.");
+        // Aquí podrías redirigir al usuario o realizar otras acciones, como enviar los datos al servidor.
+    } else {
+        alert("Hubo un problema al procesar el pago. Inténtalo de nuevo más tarde.");
+    }
+}
+
