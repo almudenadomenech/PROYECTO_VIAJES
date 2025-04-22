@@ -1010,32 +1010,49 @@ section {
 }
 
 
-/* Responsivo: Ajusta la estructura en pantallas pequeñas */
 @media (max-width: 768px) {
     .package-info {
-        flex-direction: column;  /* Apilar la imagen y la información */
-        gap: 20px;
+        flex-direction: column;  /* Cambia a diseño en columna */
+        gap: 20px;  /* Aumenta el espacio entre los elementos */
     }
 
-    .image {
-        flex: 0 0 100%;  /* Imagen ocupa todo el ancho en pantallas pequeñas */
+    .image-detail {
+        flex: 0 0 100%;  /* La imagen ahora ocupa todo el ancho disponible */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .content {
+        padding: 15px;  /* Añade más espacio para texto */
     }
 
     .info-container {
-        width: 100%;  /* La información también ocupa todo el ancho */
+        width: 100%;  /* Extiende el contenedor al ancho completo */
+        padding: 20px;  /* Ajusta el padding para un margen cómodo */
+    }
+
+    .extra-info {
+        font-size: 1rem;  /* Reduce ligeramente el tamaño de texto */
+        padding: 10px;  /* Espaciado más compacto para celdas */
+    }
+
+    .heading h1 {
+        font-size: 4rem;  /* Disminuye el tamaño del encabezado */
     }
 }
+
 /* ------------------- PAQUETES VACACIONALES ------------------- */
 .durations {
     width: 100%;
-    max-width: 900px;
+    max-width: 900px; /* Limitar el ancho máximo */
     margin-top: 5px;
     padding: 0;
-    
     border-radius: 10px;
     
-    /* Mover el contenedor hacia la izquierda  y hacia arriba */
-    transform: translate(-120px, -60px);
+    /* Eliminar la transformación en pantallas medianas */
+    transform: none;
+    margin: 20px auto; /* Centra el contenedor horizontalmente */
 }
 
 .durations h1 {
@@ -1096,20 +1113,73 @@ section {
     background-color: var(--main-color-dark); /* Un tono más oscuro del color principal */
 }
 
-/* Responsividad para pantallas pequeñas */
-@media (max-width: 768px) {
-    .duracion-item {
-        width: 100%;
-    }
-
+/* Ajuste para pantallas medianas (entre 768px y 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
     .durations {
-        padding: 15px;
+        position: relative; /* Asegura que el contenedor respete el flujo normal */
+        margin: 20px auto; /* Centra el contenedor */
+        width: 90%; /* Ajusta el ancho para asegurar que no se desborde */
+        max-width: 1000px; /* Limita el ancho máximo */
+        padding: 20px; /* Espacio interior */
+        transform: none; /* Elimina cualquier transformación previa */
+        display: block; /* Asegura que el contenedor se comporta como un bloque */
     }
 
     .duraciones-container {
-        flex-direction: column;
+        display: flex; /* Flexbox para control preciso */
+        flex-wrap: wrap; /* Permite que los elementos se ajusten a la siguiente línea */
+        justify-content: center; /* Centra los elementos */
+        align-items: flex-start; /* Alinea los elementos al inicio verticalmente */
+        gap: 15px; /* Espaciado uniforme */
+    }
+
+    .duracion-item {
+        width: 45%; /* Cada elemento ocupa casi la mitad del ancho */
+        margin-bottom: 15px; /* Espaciado inferior */
+        box-sizing: border-box; /* Padding no afecta el tamaño total */
+    }
+
+    .durations h1 {
+        font-size: 1.8rem; /* Ajusta el tamaño del encabezado */
+        text-align: center; /* Asegura que el texto esté centrado */
+    }
+
+    .btn-select {
+        width: auto; /* Ajusta el ancho del botón según el contenido */
+        margin: 10px auto; /* Centra cada botón */
+        display: block; /* Asegura que los botones no se alineen horizontalmente */
     }
 }
+
+/* Para pantallas grandes (más de 1024px) */
+@media (min-width: 1025px) {
+    .duracion-item {
+        width: 30%; /* Ajusta el ancho para mostrar más elementos por fila */
+        margin-bottom: 25px; /* Espacio generoso */
+    }
+
+    .duraciones-container {
+        justify-content: flex-start; /* Alinea los elementos a la izquierda */
+        gap: 20px; /* Espacio adicional */
+    }
+
+    .durations {
+        width: 100%; /* Ocupa todo el ancho */
+        transform: none; /* Elimina el desplazamiento */
+    }
+
+    .durations h1 {
+        font-size: 2.5rem; /* Tamaño más prominente */
+        margin-bottom: 20px; /* Espacio inferior */
+    }
+
+    .btn-select {
+        padding: 15px 30px; /* Botón más grande para pantallas grandes */
+        font-size: 1.1rem; /* Texto más destacado */
+    }
+}
+
+
 
 
 
@@ -1260,20 +1330,59 @@ section {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
-/* Responsive tweaks para pantallas pequeñas */
 @media (max-width: 600px) {
-    /* Ajuste de las miniaturas en pantallas pequeñas */
-    .gallerySwiper .swiper-slide img.thumbnail {
-        width: 60px;
-        height: 50px;
+    /* Ajuste del contenedor de la galería */
+    .gallery-container {
+        margin-top: 5px; /* Reduce el espacio superior */
+        padding: 10px; /* Añade un margen interno para mejor ajuste */
     }
 
-    /* Ajuste de las flechas de navegación en pantallas pequeñas */
-    .gallery-container .swiper-button-prev,
-    .gallery-container .swiper-button-next {
-        top: 40%;
+    /* Ajuste del Swiper para pantallas pequeñas */
+    .gallerySwiper {
+        max-width: 100%; /* Utiliza todo el ancho disponible */
+        height: auto; /* Ajusta automáticamente la altura */
+        margin: 5px auto; /* Centra el Swiper en la pantalla */
+    }
+
+    /* Ajuste de miniaturas */
+    .gallerySwiper .swiper-slide {
+        width: 70px; /* Reduce el ancho de las miniaturas */
+        height: 70px; /* Ajusta la altura de las miniaturas */
+        margin-right: 5px; /* Espacio más compacto entre miniaturas */
+    }
+
+    .gallerySwiper .swiper-slide img {
+        width: 100%; /* Tamaño dinámico para las miniaturas */
+        height: auto; /* Ajusta automáticamente la altura */
+        border-radius: 3px; /* Redondea las esquinas con menos intensidad */
+    }
+
+    /* Ajuste de la imagen principal */
+    .gallery-image {
+        width: 100%; /* Utiliza todo el ancho en pantallas pequeñas */
+        margin: 0; /* Centra la imagen sin margen adicional */
+    }
+
+    /* Ajuste de las flechas de navegación */
+    .gallery-wrapper .swiper-button-prev,
+    .gallery-wrapper .swiper-button-next {
+        width: 30px; /* Botones más compactos */
+        height: 30px; /* Botones más compactos */
+        font-size: 16px; /* Reduce el tamaño del icono */
+    }
+
+    .gallery-wrapper .swiper-button-prev:hover,
+    .gallery-wrapper .swiper-button-next:hover {
+        background-color: rgba(0, 123, 255, 0.3); /* Color hover más sutil */
+    }
+
+    /* Ajuste de la paginación */
+    .gallery-container .swiper-pagination-bullet {
+        width: 8px; /* Aumenta el tamaño de los círculos de paginación */
+        height: 8px; /* Aumenta el tamaño de los círculos de paginación */
     }
 }
+
 
 /* DESCRIPCION DEL PAQUETE */
 .contenido-paquete {
@@ -1593,6 +1702,102 @@ button:active {
     font-weight: bold;
     color: #333;
 }
+@media (max-width: 768px) {
+    /* Ajuste del contenedor de la descripción del paquete */
+    .contenido-paquete {
+        width: 100%; /* Utiliza el ancho completo en pantallas pequeñas */
+        margin: 0; /* Elimina márgenes extra */
+        padding: 15px; /* Ajusta el padding para una mejor visualización */
+        left: 0; /* Reposiciona el contenido */
+        border-radius: 8px; /* Reduce el radio de las esquinas */
+    }
+
+    .contenido-paquete h2 {
+        font-size: 1.8rem; /* Reduce el tamaño del título */
+        padding-left: 10px; /* Ajusta el padding para mantener coherencia */
+        text-align: left; /* Cambia a alineación izquierda si es necesario */
+    }
+
+    .contenido-paquete p {
+        font-size: 14px; /* Disminuye el tamaño del texto */
+        padding-left: 10px; /* Reduce los márgenes laterales */
+        padding-right: 10px;
+        line-height: 1.5; /* Ajusta el espaciado entre líneas */
+    }
+
+    /* Servicios incluidos */
+    .servicios-incluidos-title {
+        font-size: 1.6rem; /* Tamaño de fuente más compacto */
+        margin-bottom: 15px; /* Reduce el margen inferior */
+    }
+
+    .tabla-incluidos {
+        width: 100%; /* Extiende la tabla a todo el ancho */
+    }
+
+    .tabla-item {
+        padding: 10px; /* Ajusta el padding para más espacio en pantallas pequeñas */
+        font-size: 0.9rem; /* Reduce el tamaño del texto en las celdas */
+    }
+
+    /* Comentarios */
+    .review-form-container {
+        width: 90%; /* Limita el ancho del formulario */
+        padding: 10px; /* Ajusta el espacio interior */
+        margin: 15px auto; /* Centra el contenedor */
+        box-shadow: none; /* Simplifica el diseño */
+    }
+
+    .review-form h3 {
+        font-size: 1.5rem; /* Ajusta el tamaño del encabezado */
+    }
+
+    select, textarea {
+        font-size: 14px; /* Reduce el tamaño del texto */
+        padding: 8px; /* Espacio más compacto */
+    }
+
+    button {
+        font-size: 14px; /* Ajusta el tamaño del botón */
+        padding: 10px; /* Ajusta el espacio del botón */
+    }
+
+    /* Comentarios previos */
+    .comments-container {
+        margin-top: 20px; /* Reduce el espacio superior */
+    }
+
+    .comment {
+        flex-direction: column; /* Apila el contenido */
+        padding: 10px; /* Reduce el margen interno */
+    }
+
+    .user-info img {
+        width: 40px; /* Reduce el tamaño de las imágenes de usuario */
+        height: 40px;
+    }
+
+    .comment-content p {
+        font-size: 14px; /* Tamaño de texto más pequeño */
+    }
+
+    /* Puntuación promedio */
+    .average-rating-box {
+        width: 90%; /* Ajusta el ancho para dispositivos pequeños */
+        margin: 20px auto; /* Centra el contenedor */
+        padding: 15px; /* Ajusta el espacio interior */
+    }
+
+    .rating-title {
+        font-size: 1.4rem; /* Ajusta el tamaño del título */
+    }
+
+    .rating-display .star {
+        font-size: 18px; /* Reduce el tamaño de las estrellas */
+    }
+}
+
+
 
 /* ----------------- FORMULARIO DE PAQUETES (ADMIN) ----------------- */
 

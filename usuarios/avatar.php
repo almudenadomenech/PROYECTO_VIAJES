@@ -1,5 +1,6 @@
 <?php
 include('../includes/conexion.php'); // Conexión a la base de datos
+include('../includes/navbar.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto_perfil'])) {
     $foto_tmp = $_FILES['foto_perfil']['tmp_name'];
@@ -34,11 +35,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto_perfil'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subir Foto</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <!-- swiper css link -->
+    <linkrel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+     <!-- font awesone cdn link  -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+
+   <!-- Encabezado -->
+   <section class="heading-user-list" style="background:url(../images/user-list.jpg) no-repeat">
+    <h1>Sube una foto a tu perfil</h1>
+</section>
 <section class="booking">
-    <h1 class="heading-title">Subir Foto de Perfil</h1>
+
 
     <form action="avatar.php" method="POST" enctype="multipart/form-data" class="booking-form">
         <div class="preview-container" style="text-align: center; margin-bottom: 1rem;">
@@ -87,3 +99,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto_perfil'])) {
 </script>
 </body>
 </html>
+<!-- swiper js link  -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+     <script src="../js/script.js"></script>
+</body>
+</html>
+  <!-- seccion footer   -->
+  <?php
+    include('../includes/footer.php');
+?>
