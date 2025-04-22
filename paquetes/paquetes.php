@@ -75,13 +75,16 @@ if (mysqli_num_rows($result) == 0) {
                         <h3><?= htmlspecialchars($paquete['location']) ?></h3>
                         <p><?= htmlspecialchars($paquete['description']) ?></p>
                         <?php if ($isAdmin): ?>
-                            <div class="admin-btns">
-                                <a href="paquetes-form.php?id=<?= $paquete['id'] ?>" class="btn btn-editar">Editar</a>
-                                <a href="eliminar-paquete.php?id=<?= $paquete['id'] ?>" class="btn btn-eliminar">Eliminar</a>
-                            </div>
-                        <?php else: ?>
-                            <a href="paquetes-detail.php?id=<?= $paquete['id'] ?>" class="btn">Ver detalles</a>
-                        <?php endif; ?>
+    <div class="admin-btns">
+        <a href="paquetes-form.php?id=<?= $paquete['id'] ?>" class="btn btn-editar">Editar</a>
+        <a href="eliminar-paquete.php?id=<?= $paquete['id'] ?>" class="btn btn-eliminar">Eliminar</a>
+    </div>
+<?php else: ?>
+    <div class="admin-btns">
+        <a href="paquetes-detail.php?id=<?= $paquete['id'] ?>" class="btn">Ver detalles</a>
+    </div>
+<?php endif; ?>
+
 
 
 

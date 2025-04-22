@@ -207,7 +207,7 @@ section {
 
 
 
-/* ESTILOS PARA LOS BOTONES GENÉRICOS */
+
 
 /* ESTILOS PARA LOS BOTONES GENÉRICOS */
 .btn {
@@ -762,24 +762,26 @@ section {
 /* Caja de paquete */
 .packages .box-container .box {
     display: flex;
-    flex-direction: column;  /* Asegura que los elementos se apilen verticalmente */
+    flex-direction: column;
+    justify-content: space-between;
     background: var(--white);
     border: 1px solid black;
     box-shadow: var(--box-shadow);
-    min-height: 500px; /* Altura mínima */
+    min-height: 500px;
     position: relative;
-    padding-bottom: 4rem; /* Espacio para los botones */
+    padding-bottom: 4rem;
+    width: 100%;
 }
-
 /* Estilo del contenido dentro de la caja */
 .packages .box-container .box .content {
     padding: 2rem;
     text-align: center;
-    flex-grow: 1;  /* Hace que el contenido ocupe el espacio restante */
+    flex-grow: 1;  /* Asegura que el contenido ocupe el espacio restante */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;  /* Distribuye el contenido hacia arriba y abajo */
+    justify-content: space-between;
 }
+
 
 /* Título dentro del contenido */
 .packages .box-container .box .content h3 {
@@ -809,14 +811,10 @@ section {
     padding: 1rem 0;
 }
 
-/* Aplica solo al botón general, NO a los de admin */
+/* Aplica solo al botón general (NO a los de admin) */
 .packages .box-container .box .content > .btn {
-    margin-top: 1rem;
-    position: absolute;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 1rem 2rem;
+    margin-top: 1rem;  /* Espacio superior para separar el contenido */
+    padding: 1rem 2rem;  /* Estilo general de los botones */
     background-color: var(--black);
     color: var(--white);
     text-transform: capitalize;
@@ -825,6 +823,7 @@ section {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
 }
+
 
 
 /* Hover en el botón */
@@ -859,39 +858,95 @@ section {
 .packages .load-more-packages .btn:hover {
     background-color: var(--main-color);
 }
-
-
-
-
-
-/* Contenedor de botones admin */
+/* Contenedor de los botones de administración */
 .admin-btns {
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: auto;  /* Asegura que se vayan al final del contenedor */
-    padding-top: 1rem;  /* Espacio superior */
-    width: 100%;  /* Hace que el contenedor ocupe todo el ancho disponible */
+    flex-direction: row;  /* Alinea los botones horizontalmente */
+    justify-content: center;  /* Centra los botones horizontalmente */
+    align-items: center;  /* Centra los botones verticalmente */
+    gap: 1rem;  /* Espacio entre los botones */
+    width: 100%;  /* Asegura que ocupe todo el ancho disponible */
+    padding: 1rem;  /* Agrega un poco de espacio interno */
+    box-sizing: border-box;  /* Evita que el padding afecte el ancho */
+    position: absolute;  /* Asegura que los botones estén al fondo */
+    bottom: 0;  /* Alinea los botones al fondo */
+    overflow: hidden; /* Evita que el contenido se desborde */
+    flex-wrap: wrap; /* Permite que los botones se ajusten a la siguiente línea si es necesario */
 }
 
-/* Botones */
+/* Botones individuales */
 .admin-btns .btn {
-    padding: 1rem 2rem;
+    text-align: center;  /* Centra el texto dentro del botón */
+    padding: 0.75rem 1.5rem;  /* Relleno de los botones */
     background-color: var(--black);
     color: var(--white);
     text-transform: capitalize;
     border-radius: 5px;
     text-decoration: none;
-    text-align: center;
-    width: 48%;  /* Los botones se distribuyen igualmente */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
+    min-width: 120px;  /* Establece el ancho mínimo para los botones */
+    max-width: 100%; /* Limita el ancho máximo de los botones */
+    width: auto; /* Los botones se ajustan al tamaño necesario */
+    flex-grow: 0; /* No permite que los botones crezcan de manera automática */
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
 }
 
-/* Hover en los botones */
+/* Efecto hover en los botones */
 .admin-btns .btn:hover {
-    background-color: var(--main-color);
+    background-color: var(--main-color); /* Cambio de color al pasar el ratón */
 }
+
+/* Media Query para pantallas pequeñas (hasta 768px) */
+@media (max-width: 768px) {
+    .admin-btns {
+        flex-direction: column; /* Hace que los botones se apilen verticalmente */
+        gap: 0.5rem; /* Reduce el espacio entre los botones */
+    }
+
+    .admin-btns .btn {
+        width: 100%; /* Los botones ocupan todo el ancho disponible */
+        min-width: 0; /* Permite que los botones no tengan un mínimo fijo y se ajusten mejor */
+        max-width: 100%; /* Asegura que los botones no se desborden */
+    }
+}
+
+/* Media Query para pantallas aún más pequeñas (máximo 480px) */
+@media (max-width: 480px) {
+    .admin-btns .btn {
+        font-size: 1.2rem; /* Ajusta el tamaño de la fuente */
+        padding: 0.8rem 1.2rem; /* Ajusta el tamaño del padding */
+        min-width: 120px; /* Asegura que los botones no sean demasiado pequeños */
+    }
+}
+
+
+/* Botones centrados cuando hay uno */
+.admin-btns.single-btn {
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente, si hay más espacio */
+}
+
+
+
+
+/* Asegura que el contenedor de los botones siempre esté al fondo del contenedor */
+.packages .box-container .box {
+    display: flex;
+    flex-direction: column; /* Apilar los elementos verticalmente */
+    justify-content: space-between; /* Deja espacio entre los elementos (contenido y botones) */
+    background: var(--white);
+    border: 1px solid black;
+    box-shadow: var(--box-shadow);
+    min-height: 500px; /* Altura mínima para el contenedor */
+    position: relative;
+    padding-bottom: 4rem; /* Espacio para los botones */
+    width: 100%; /* Asegura que ocupe el 100% del contenedor */
+}
+
+
+
+
 
 
 /* ----------------------PAQUETES DETAIL-------------------------- */
