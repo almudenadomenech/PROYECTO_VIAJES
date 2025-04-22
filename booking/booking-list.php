@@ -18,7 +18,7 @@
 <body>
 <!-- Encabezado -->
 <section class="heading-user-list" style="background:url(../images/user-list.jpg) no-repeat">
-    <h1>Lista de Usuarios Registrados</h1>
+    <h1>reservas</h1>
 </section>
 <?php
 
