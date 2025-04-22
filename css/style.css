@@ -1323,12 +1323,16 @@ section {
 }
 
 #lightbox-img {
-    max-width: 90%;
-    max-height: 90%;
+    width: 80%; /* Permite que la imagen ocupe un 80% del ancho de la pantalla */
+    height: auto; /* Mantiene la proporción de la imagen */
+    max-width: 90%; /* La imagen puede crecer hasta el 90% del contenedor */
+    max-height: 90%; /* También limita la altura */
     border: 5px solid white;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
+
+
 
 @media (max-width: 600px) {
     /* Ajuste del contenedor de la galería */
