@@ -35,6 +35,13 @@ if (isset($_GET['id'])) {
     while ($row = mysqli_fetch_assoc($duraciones_result)) {
         $duraciones[] = $row;
     }
+
+    $imagenes_galeria = [];
+    $galeria_query = "SELECT ruta_imagen FROM imagenes_paquete WHERE paquete_id = $id";
+    $galeria_result = mysqli_query($link, $galeria_query);
+    while ($row = mysqli_fetch_assoc($galeria_result)) {
+        $imagenes_galeria[] = $row['ruta_imagen'];
+    }
 } else {
     $duraciones = [];
 }
@@ -70,11 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         category='$category', contenido_paquete='$contenido_paquete',
         transporte=$transporte, alojamiento=$alojamiento, comidas=$comidas,
         guia=$guia, excursiones=$excursiones WHERE id=$id";
-
     } else {
         $sql = "INSERT INTO paquetes (nombre, description, image, location, availability, category, contenido_paquete, transporte, alojamiento, comidas, guia, excursiones)
         VALUES ('$nombre', '$description', '$image', '$location', '$availability', '$category', '$contenido_paquete', $transporte, $alojamiento, $comidas, $guia, $excursiones)";
-
     }
 
     // Ejecutar inserción o actualización
@@ -201,6 +206,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <span>Galería de Imágenes</span>
                 <input type="file" name="gallery_images[]" accept="image/*" multiple onchange="previewGalleryImages(event)">
                 <div id="gallery-preview"></div>
+                <?php if (!empty($imagenes_galeria)): ?>
+                    <div id="existing-gallery">
+                        <span>Imágenes Actuales:</span><br>
+                        <?php foreach ($imagenes_galeria as $img): ?>
+                            <img src="../images/<?= htmlspecialchars($img) ?>" style="width: 100px; margin: 5px; border: 1px solid #ccc;">
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
             </div>
 
 
