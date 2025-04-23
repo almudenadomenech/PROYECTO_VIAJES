@@ -48,48 +48,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = mysqli_real_escape_string($link, $_POST['category']);
     $contenido_paquete = mysqli_real_escape_string($link, $_POST['contenido_paquete']);
     $availability = isset($_POST['availability']) ? 1 : 0;
+    $transporte = isset($_POST['transporte']) ? 1 : 0;
+    $alojamiento = isset($_POST['alojamiento']) ? 1 : 0;
+    $comidas = isset($_POST['comidas']) ? 1 : 0;
+    $guia = isset($_POST['guia']) ? 1 : 0;
+    $excursiones = isset($_POST['excursiones']) ? 1 : 0;
 
-  // Imagen principal
-if (!empty($_FILES['image']['name'])) {
-    $img_name = basename($_FILES['image']['name']);
-    $target = "../images/" . $img_name;
-    move_uploaded_file($_FILES['image']['tmp_name'], $target);
-    $image = $img_name;
-}
 
-// Inserción o actualización del paquete con imagen principal
-if (!empty($id)) {
-    $sql = "UPDATE paquetes SET nombre='$nombre', description='$description',
-            image='$image', location='$location', availability='$availability',
-            category='$category',  contenido_paquete='$contenido_paquete' WHERE id=$id";
-} else {
-    $sql = "INSERT INTO paquetes (nombre, description, image, location, availability, category)
-            VALUES ('$nombre', '$description', '$image', '$location', '$availability', '$category, '$contenido_paquete'')";
-}
-
-// Ejecutar inserción o actualización
-if (mysqli_query($link, $sql)) {
-    if (empty($id)) {
-        $id = mysqli_insert_id($link);
+    // Imagen principal
+    if (!empty($_FILES['image']['name'])) {
+        $img_name = basename($_FILES['image']['name']);
+        $target = "../images/" . $img_name;
+        move_uploaded_file($_FILES['image']['tmp_name'], $target);
+        $image = $img_name;
     }
 
-    // ✅ Galería de imágenes
-    if (!empty($_FILES['gallery_images']['name'][0])) {
-        foreach ($_FILES['gallery_images']['name'] as $index => $fileName) {
-            $tmpName = $_FILES['gallery_images']['tmp_name'][$index];
-            $imgName = basename($fileName);
-            $targetPath = "../images/" . $imgName;
-            move_uploaded_file($tmpName, $targetPath);
+    // Inserción o actualización del paquete con imagen principal
+    if (!empty($id)) {
+        $sql = "UPDATE paquetes SET nombre='$nombre', description='$description',
+        image='$image', location='$location', availability='$availability',
+        category='$category', contenido_paquete='$contenido_paquete',
+        transporte=$transporte, alojamiento=$alojamiento, comidas=$comidas,
+        guia=$guia, excursiones=$excursiones WHERE id=$id";
 
-            $insert_gallery = "INSERT INTO imagenes_paquete (paquete_id, ruta_imagen) VALUES ($id, '$imgName')";
-            mysqli_query($link, $insert_gallery);
+    } else {
+        $sql = "INSERT INTO paquetes (nombre, description, image, location, availability, category, contenido_paquete, transporte, alojamiento, comidas, guia, excursiones)
+        VALUES ('$nombre', '$description', '$image', '$location', '$availability', '$category', '$contenido_paquete', $transporte, $alojamiento, $comidas, $guia, $excursiones)";
+
+    }
+
+    // Ejecutar inserción o actualización
+    if (mysqli_query($link, $sql)) {
+        if (empty($id)) {
+            $id = mysqli_insert_id($link);
         }
-    }
 
-    header('Location: paquetes.php');
-    exit;
-}
-else {
+        // ✅ Galería de imágenes
+        if (!empty($_FILES['gallery_images']['name'][0])) {
+            foreach ($_FILES['gallery_images']['name'] as $index => $fileName) {
+                $tmpName = $_FILES['gallery_images']['tmp_name'][$index];
+                $imgName = basename($fileName);
+                $targetPath = "../images/" . $imgName;
+                move_uploaded_file($tmpName, $targetPath);
+
+                $insert_gallery = "INSERT INTO imagenes_paquete (paquete_id, ruta_imagen) VALUES ($id, '$imgName')";
+                mysqli_query($link, $insert_gallery);
+            }
+        }
+
+        header('Location: paquetes.php');
+        exit;
+    } else {
         echo "Error: " . mysqli_error($link);
     }
 }
@@ -103,7 +112,7 @@ else {
     <meta charset="UTF-8">
     <title><?= $id ? 'Editar Paquete' : 'Nuevo Paquete' ?></title>
     <!-- swiper css link -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <!-- font awesome cdn link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -175,24 +184,24 @@ else {
                 <textarea name="description"><?= htmlspecialchars($description) ?></textarea>
             </div>
 
-           
-<!-- Imagen principal -->
-<div class="inputBox">
-    <span>Imagen Principal</span>
-    <input type="file" name="image" accept="image/*" onchange="previewMainImage(event)">
-    <div id="main-image-preview">
-        <?php if (!empty($image)): ?>
-            <img src="../images/<?= htmlspecialchars($image) ?>" style="width: 150px; height: auto;">
-        <?php endif; ?>
-    </div>
-</div>
 
-<!-- Galería de imágenes -->
-<div class="inputBox">
-    <span>Galería de Imágenes</span>
-    <input type="file" name="gallery_images[]" accept="image/*" multiple onchange="previewGalleryImages(event)">
-    <div id="gallery-preview"></div>
-</div>
+            <!-- Imagen principal -->
+            <div class="inputBox">
+                <span>Imagen Principal</span>
+                <input type="file" name="image" accept="image/*" onchange="previewMainImage(event)">
+                <div id="main-image-preview">
+                    <?php if (!empty($image)): ?>
+                        <img src="../images/<?= htmlspecialchars($image) ?>" style="width: 150px; height: auto;">
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- Galería de imágenes -->
+            <div class="inputBox">
+                <span>Galería de Imágenes</span>
+                <input type="file" name="gallery_images[]" accept="image/*" multiple onchange="previewGalleryImages(event)">
+                <div id="gallery-preview"></div>
+            </div>
 
 
 
@@ -239,11 +248,11 @@ else {
                     </tbody>
                 </table>
             </div>
-<!-- Descripción del contenido del paquete -->
-<div class="inputBox" style="grid-column: span 3;">
-    <span>Descripción del Contenido del Paquete</span>
-    <textarea name="contenido_paquete"><?= htmlspecialchars($contenido_paquete ?? '') ?></textarea>
-</div>
+            <!-- Descripción del contenido del paquete -->
+            <div class="inputBox" style="grid-column: span 3;">
+                <span>Descripción del Contenido del Paquete</span>
+                <textarea name="contenido_paquete"><?= htmlspecialchars($contenido_paquete ?? '') ?></textarea>
+            </div>
 
             <!-- Disponibilidad en formato de tabla -->
             <div class="inputBox" style="grid-column: span 3;">
@@ -267,29 +276,29 @@ else {
     </section>
 
     <script>
-function previewMainImage(event) {
-    const container = document.getElementById('main-image-preview');
-    container.innerHTML = '';
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(event.target.files[0]);
-    img.style.width = '150px';
-    container.appendChild(img);
-}
+        function previewMainImage(event) {
+            const container = document.getElementById('main-image-preview');
+            container.innerHTML = '';
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(event.target.files[0]);
+            img.style.width = '150px';
+            container.appendChild(img);
+        }
 
-function previewGalleryImages(event) {
-    const container = document.getElementById('gallery-preview');
-    container.innerHTML = '';
-    const files = event.target.files;
+        function previewGalleryImages(event) {
+            const container = document.getElementById('gallery-preview');
+            container.innerHTML = '';
+            const files = event.target.files;
 
-    for (let i = 0; i < files.length; i++) {
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(files[i]);
-        img.style.width = '100px';
-        img.style.margin = '5px';
-        container.appendChild(img);
-    }
-}
-</script>
+            for (let i = 0; i < files.length; i++) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(files[i]);
+                img.style.width = '100px';
+                img.style.margin = '5px';
+                container.appendChild(img);
+            }
+        }
+    </script>
 
 
     <?php include('../includes/footer.php'); ?>

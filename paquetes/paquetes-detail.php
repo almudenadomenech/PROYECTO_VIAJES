@@ -2,10 +2,10 @@
 session_start();
 include('../includes/conexion.php');
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: ../paginas/login.php");
-    exit;
-}
+// if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+//     header("Location: ../paginas/login.php");
+//     exit;
+// }
 
 $package_id = $_GET['id'];
 
