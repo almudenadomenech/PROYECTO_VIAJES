@@ -2389,7 +2389,7 @@ textarea {
 /* Estilo para el botón de aplicar descuento */
 .payment-section .inputBox #apply-discount {
     padding: 1rem 2rem;
-    background-color: #28a745;
+    background-color: var(--main-color);
     color: #fff;
     border: none;
     font-size: 1.4rem;
@@ -2401,7 +2401,7 @@ textarea {
 
 /* Hover del botón de aplicar descuento */
 .payment-section .inputBox #apply-discount:hover {
-    background-color: #218838;
+    background-color:black;
 }
 
 /* Estilo para el botón de pago */
