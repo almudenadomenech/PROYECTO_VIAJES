@@ -190,7 +190,8 @@ if (isset($_POST['send'])) {
 
                         $result = mysqli_query($link, $query);
                         while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<option value='{$row['id']}' data-duration='{$row['duracion']}'>Paquete: {$row['duracion']} días - €" . number_format($row['precio'], 2) . "</option>";
+                            echo "<option value='{$row['id']}' data-duration='{$row['duracion']}' data-precio='{$row['precio']}'>Paquete: {$row['duracion']} días - €" . number_format($row['precio'], 2) . "</option>";
+
                         }
                     }
                     ?>

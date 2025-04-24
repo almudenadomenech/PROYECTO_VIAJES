@@ -120,21 +120,38 @@ document.addEventListener('DOMContentLoaded', function () {
     // Función para calcular y establecer la fecha de fin
     function setLeavingDate() {
         const arrivalsDate = new Date(arrivalsInput.value);
-        const selectedDuration = durationSelect.selectedOptions[0]?.dataset?.duration;
-
-        // Solo actualizamos si tenemos una fecha de inicio y una duración seleccionada
-        if (arrivalsDate && selectedDuration) {
-            // Asegurarse de que la duración sea un número entero
+        const selectedOption = durationSelect.selectedOptions[0];
+    
+        const selectedDuration = selectedOption?.dataset?.duration;
+        const selectedPrice = selectedOption?.dataset?.precio;
+    
+        // Establecer fecha de salida
+        if (arrivalsInput.value && selectedDuration) {
+            const arrivalsDate = new Date(arrivalsInput.value);
             const durationDays = parseInt(selectedDuration);
-            if (!isNaN(durationDays)) {
-                // Sumar los días seleccionados a la fecha de inicio
+        
+            if (!isNaN(arrivalsDate.getTime()) && !isNaN(durationDays)) {
                 arrivalsDate.setDate(arrivalsDate.getDate() + durationDays);
-
-                // Establecer la nueva fecha de fin en el campo correspondiente
-                leavingInput.value = arrivalsDate.toISOString().split('T')[0]; // Formato yyyy-mm-dd
+                leavingInput.value = arrivalsDate.toISOString().split('T')[0];
+            } else {
+                console.warn("Fecha de inicio o duración inválida");
             }
         }
+        
+    
+        // Establecer precio total
+        if (selectedPrice) {
+            const price = parseFloat(selectedPrice);
+            if (!isNaN(price)) {
+                document.getElementById('total-price').value = `€${price.toFixed(2)}`;
+                document.getElementById('discounted-price').value = `€${price.toFixed(2)}`; // Inicial igual
+            }
+        } else {
+            document.getElementById('total-price').value = "€0.00";
+            document.getElementById('discounted-price').value = "€0.00";
+        }
     }
+    
 
     // Detectar cuando cambie la fecha de inicio
     arrivalsInput.addEventListener('change', setLeavingDate);
