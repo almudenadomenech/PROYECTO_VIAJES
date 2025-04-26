@@ -12,6 +12,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 // Obtener ID del usuario logueado
 $user_id = $_SESSION['id'];
 
+// Generar código de descuento si no existe aún en la sesión
+if (!isset($_SESSION['discount_code'])) {
+    $randomString = strtoupper(substr(md5(time() . rand()), 0, 6)); // Código de 6 caracteres aleatorios
+    $_SESSION['discount_code'] = 'DESCUENTO_' . $randomString;
+}
+$discount_code = $_SESSION['discount_code']; // Código disponible para usar
+
 // Consultar los datos del usuario en la base de datos
 $query = "SELECT usuario, email, telefono, direccion FROM usuarios WHERE id = $user_id";
 $result = mysqli_query($link, $query);
@@ -212,41 +219,63 @@ if (isset($_POST['send'])) {
         </div>
 <!-- Sección de Pago y Descuento -->
 <section class="payment-section">
-                <!-- Mostrar el precio total -->
-                <div class="inputBox">
-                    <span>Precio total:</span>
-                    <input type="text" id="total-price" value="€0.00" disabled>
-                </div>
+    <h2>Detalles de pago</h2>
 
-                <!-- Campo para aplicar descuento -->
-                <div class="inputBox">
-                    <span>Código de descuento:</span>
-                    <input type="text" id="discount-code" placeholder="Introduce tu código de descuento">
-                </div>
+    <div class="inputBox">
+        <span>Número de tarjeta:</span>
+        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+    </div>
 
-                <!-- Botón para aplicar el descuento -->
-                <div class="inputBox">
-                    <button type="button" id="apply-discount" onclick="applyDiscount()">Aplicar descuento</button>
-                </div>
+    <div class="inputBox">
+        <span>Fecha de expiración:</span>
+        <input type="text" id="expiry-date" placeholder="MM/AA" maxlength="5">
+    </div>
 
-                <!-- Mostrar el total después del descuento -->
-                <div class="inputBox">
-                    <span>Precio después del descuento:</span>
-                    <input type="text" id="discounted-price" value="€0.00" disabled>
-                </div>
+    <div class="inputBox">
+        <span>CVV:</span>
+        <input type="password" id="cvv" placeholder="123" maxlength="3">
+    </div>
 
-                <!-- Botón de pago -->
-                <div class="button-container">
-                    <button type="button" id="pay-button" onclick="processPayment()">Simular pago</button>
-                </div>
-            </section>
-        <!-- Botón de enviar -->
-        <div class="button-container">
-            <input type="submit" value="Enviar" class="btn" name="send">
-        </div>
+    <div class="inputBox">
+    <span>Código de descuento:</span>
+    <input 
+        type="text" 
+        id="discount-code" 
+        placeholder="Introduce tu código de descuento" 
+        value="<?= htmlspecialchars($discount_code) ?>"
+        data-valid-code="<?= htmlspecialchars($discount_code) ?>"
+    >
+</div>
 
-    </form>
+<div class="inputBox">
+    <button type="button" id="apply-discount" onclick="applyDiscount()">Aplicar descuento</button>
+</div>
+
+<div class="inputBox">
+    <span>Precio original:</span>
+    <input type="text" id="total-price" value="€0.00" disabled>
+</div>
+
+<div class="inputBox">
+    <span>Descuento aplicado:</span>
+    <input type="text" id="discount-amount" value="€0.00" disabled>
+</div>
+
+<div class="inputBox">
+    <span>Precio final a pagar:</span>
+    <input type="text" id="final-price" value="€0.00" disabled>
+</div>
+
+
+    <div class="button-container">
+        <button type="button" id="pay-button" onclick="simulatePayment()">Pagar ahora</button>
+    </div>
 </section>
+
+
+
+
+
 
 <!-- Modal de éxito -->
 <?php if ($reservation_success): ?>

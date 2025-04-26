@@ -163,43 +163,98 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // PASARELA DE PAGO
 
-// Función para aplicar el descuento
 function applyDiscount() {
-    const discountCode = document.getElementById('discount-code').value;
+    const discountInput = document.getElementById('discount-code');
+    const discountCode = discountInput.value.trim();
+    const validCode = discountInput.getAttribute('data-valid-code'); // Código correcto desde el HTML
+
     let totalPrice = parseFloat(document.getElementById('total-price').value.replace('€', '').replace(',', '.'));
-    let discount = 0;
-
-    // Lógica para aplicar descuento (puedes modificar esto según tus necesidades)
-    if (discountCode === 'DESCUENTO10') {
-        discount = 0.10; // 10% de descuento
-    } else if (discountCode === 'DESCUENTO20') {
-        discount = 0.20; // 20% de descuento
-    }
-
-    // Aplicar el descuento
-    const discountedPrice = totalPrice - (totalPrice * discount);
-
-    // Mostrar el precio después del descuento
-    document.getElementById('discounted-price').value = '€' + discountedPrice.toFixed(2);
-}
-
-// Función para simular el pago
-function processPayment() {
-    const discountedPrice = parseFloat(document.getElementById('discounted-price').value.replace('€', '').replace(',', '.'));
     
-    if (discountedPrice <= 0) {
-        alert("Por favor, asegúrate de que el precio total sea mayor a 0.");
+    // Validar precio base
+    if (isNaN(totalPrice) || totalPrice <= 0) {
+        alert('Por favor selecciona un paquete válido antes de aplicar descuento.');
         return;
     }
 
-    // Simular un proceso de pago
-    const paymentSuccess = Math.random() > 0.2; // Simulamos un 80% de éxito en el pago
+    // Comprobar si el código es correcto
+    if (discountCode === validCode) {
+        let discountPercent = 0.15; // 15% de descuento
+        const discountAmount = totalPrice * discountPercent;
+        const finalPrice = totalPrice - discountAmount;
 
-    if (paymentSuccess) {
-        alert("¡Pago realizado con éxito! Gracias por tu compra.");
-        // Aquí podrías redirigir al usuario o realizar otras acciones, como enviar los datos al servidor.
+        // Mostrar descuentos
+        document.getElementById('discount-amount').value = '€' + discountAmount.toFixed(2);
+        document.getElementById('final-price').value = '€' + finalPrice.toFixed(2);
+        document.getElementById('discounted-price').value = '€' + finalPrice.toFixed(2);
+
+        alert('¡Código de descuento aplicado correctamente!');
     } else {
-        alert("Hubo un problema al procesar el pago. Inténtalo de nuevo más tarde.");
+        // Código inválido ➔ Mostrar todo normal sin descuento
+        alert('Código inválido. No se aplicó descuento.');
+
+        document.getElementById('discount-amount').value = '€0.00';
+        document.getElementById('final-price').value = '€' + totalPrice.toFixed(2);
+        document.getElementById('discounted-price').value = '€' + totalPrice.toFixed(2);
     }
 }
 
+
+
+// Función para simular el pago
+function simulatePayment() {
+    // Crear modal de procesamiento
+    let processingModal = document.createElement('div');
+    processingModal.style.position = 'fixed';
+    processingModal.style.top = '0';
+    processingModal.style.left = '0';
+    processingModal.style.width = '100%';
+    processingModal.style.height = '100%';
+    processingModal.style.background = 'rgba(0,0,0,0.6)';
+    processingModal.style.display = 'flex';
+    processingModal.style.alignItems = 'center';
+    processingModal.style.justifyContent = 'center';
+    processingModal.style.zIndex = '9999';
+    processingModal.id = 'processing-modal';
+
+    processingModal.innerHTML = `
+        <div style="background:#fff; padding:30px 40px; border-radius:10px; text-align:center;">
+            <h2>Procesando pago...</h2>
+            <p>Por favor espera unos segundos</p>
+        </div>
+    `;
+
+    document.body.appendChild(processingModal);
+
+    // Simular tiempo de procesamiento
+    setTimeout(function() {
+        // Eliminar modal de procesamiento
+        document.body.removeChild(processingModal);
+        
+        // Crear modal de éxito
+        let successModal = document.createElement('div');
+        successModal.style.position = 'fixed';
+        successModal.style.top = '0';
+        successModal.style.left = '0';
+        successModal.style.width = '100%';
+        successModal.style.height = '100%';
+        successModal.style.background = 'rgba(0,0,0,0.6)';
+        successModal.style.display = 'flex';
+        successModal.style.alignItems = 'center';
+        successModal.style.justifyContent = 'center';
+        successModal.style.zIndex = '9999';
+
+        successModal.innerHTML = `
+            <div style="background:#fff; padding:30px 40px; border-radius:10px; text-align:center;">
+                <h2>¡Pago realizado con éxito!</h2>
+                <p>Serás redirigido en unos segundos...</p>
+            </div>
+        `;
+
+        document.body.appendChild(successModal);
+
+        // Redirigir automáticamente después de 3 segundos
+        setTimeout(function() {
+            window.location.href = 'booking.php'; 
+        }, 3000);
+    }, 3000);
+}
