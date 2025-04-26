@@ -218,59 +218,59 @@ if (isset($_POST['send'])) {
             </div>
         </div>
 <!-- Sección de Pago y Descuento -->
+<h2 class="payment-title">Sección de pago</h2>
+
 <section class="payment-section">
-    <h2>Detalles de pago</h2>
 
+  <div class="payment-left">
+    
     <div class="inputBox">
-        <span>Número de tarjeta:</span>
-        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+      <span>Número de tarjeta:</span>
+      <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
     </div>
 
     <div class="inputBox">
-        <span>Fecha de expiración:</span>
-        <input type="text" id="expiry-date" placeholder="MM/AA" maxlength="5">
+      <span>Fecha de expiración:</span>
+      <input type="text" id="expiry-date" placeholder="MM/AA" maxlength="5">
     </div>
 
     <div class="inputBox">
-        <span>CVV:</span>
-        <input type="password" id="cvv" placeholder="123" maxlength="3">
+      <span>CVV:</span>
+      <input type="password" id="cvv" placeholder="123" maxlength="3">
     </div>
 
     <div class="inputBox">
-    <span>Código de descuento:</span>
-    <input 
-        type="text" 
-        id="discount-code" 
-        placeholder="Introduce tu código de descuento" 
-        value="<?= htmlspecialchars($discount_code) ?>"
-        data-valid-code="<?= htmlspecialchars($discount_code) ?>"
-    >
-</div>
+      <span>Código de descuento:</span>
+      <input type="text" id="discount-code" placeholder="Introduce tu código de descuento" value="<?= htmlspecialchars($discount_code) ?>" data-valid-code="<?= htmlspecialchars($discount_code) ?>">
+    </div>
 
-<div class="inputBox">
-    <button type="button" id="apply-discount" onclick="applyDiscount()">Aplicar descuento</button>
-</div>
+    <div class="inputBox">
+      <button type="button" id="apply-discount" onclick="applyDiscount()">Aplicar descuento</button>
+    </div>
+  </div>
 
-<div class="inputBox">
-    <span>Precio original:</span>
-    <input type="text" id="total-price" value="€0.00" disabled>
-</div>
+  <div class="payment-right">
+    <div class="inputBox">
+      <span>Precio original:</span>
+      <input type="text" id="total-price" value="€0.00" disabled>
+    </div>
 
-<div class="inputBox">
-    <span>Descuento aplicado:</span>
-    <input type="text" id="discount-amount" value="€0.00" disabled>
-</div>
+    <div class="inputBox">
+      <span>Descuento aplicado:</span>
+      <input type="text" id="discount-amount" value="€0.00" disabled>
+    </div>
 
-<div class="inputBox">
-    <span>Precio final a pagar:</span>
-    <input type="text" id="final-price" value="€0.00" disabled>
-</div>
-
+    <div class="inputBox">
+      <span>Precio final a pagar:</span>
+      <input type="text" id="final-price" value="€0.00" disabled>
+    </div>
 
     <div class="button-container">
-        <button type="button" id="pay-button" onclick="simulatePayment()">Pagar ahora</button>
+      <button type="button" id="pay-button" onclick="simulatePayment()">Pagar ahora</button>
     </div>
+  </div>
 </section>
+
 
 
 
