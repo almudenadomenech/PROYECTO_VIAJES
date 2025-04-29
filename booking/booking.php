@@ -64,6 +64,8 @@ if (isset($_POST['send'])) {
     $arrivals = mysqli_real_escape_string($link, $_POST['arrivals']);
     $leaving = mysqli_real_escape_string($link, $_POST['leaving']);
     $duracion_paquete_id = $_POST['duracion_paquete_id']; // Obtener el ID de la duración seleccionada
+    $location = mysqli_real_escape_string($link, $_POST['location']);
+
 
     // Consultar la duración y el precio del paquete seleccionado
     $duracion_query = "SELECT duracion, precio FROM duraciones_paquete WHERE id = '$duracion_paquete_id'";
@@ -77,6 +79,10 @@ if (isset($_POST['send'])) {
         $duracion = 0;
         $precio = 0;
     }
+    // Si el precio con descuento existe y es válido, usarlo
+if (isset($_POST['precio_con_descuento']) && is_numeric($_POST['precio_con_descuento']) && $_POST['precio_con_descuento'] > 0) {
+    $precio = mysqli_real_escape_string($link, $_POST['precio_con_descuento']);
+}
 
     // Validar que la fecha de fin sea posterior a la de inicio
     if (strtotime($leaving) <= strtotime($arrivals)) {
@@ -84,8 +90,9 @@ if (isset($_POST['send'])) {
         $message = "La fecha de fin debe ser posterior a la fecha de inicio.";
     } else {
         // Consulta SQL para insertar la reserva con la duración y el precio seleccionados
-        $sql = "INSERT INTO booking (nombre, email, telefono, direccion, numero_personas, fecha_inicio, fecha_fin, usuario_id, duracion, precio)
-                VALUES ('$name', '$email', '$phone', '$address', '$guest', '$arrivals', '$leaving', '$user_id', '$duracion', '$precio')";
+        $sql = "INSERT INTO booking (nombre, email, telefono, direccion, numero_personas, fecha_inicio, fecha_fin, usuario_id, duracion, precio, location)
+        VALUES ('$name', '$email', '$phone', '$address', '$guest', '$arrivals', '$leaving', '$user_id', '$duracion', '$precio', '$location')";
+
 
         // Ejecutar la consulta
         if ($link->query($sql) === TRUE) {
@@ -181,7 +188,8 @@ if (isset($_POST['send'])) {
                 <input type="text" value="<?= htmlspecialchars($package_name) ?>" disabled>
             </div>
             
-            
+            <input type="hidden" name="location" value="<?= htmlspecialchars($package_location) ?>">
+
 
             <!-- Selección de duración y precio -->
             <div class="inputBox">
@@ -215,9 +223,14 @@ if (isset($_POST['send'])) {
             <div class="inputBox">
                 <span>Fecha fin:</span>
                 <input type="date" id="leaving" name="leaving" required readonly>
-            </div>
+            </div>                
+
+            
         </div>
-<!-- Sección de Pago y Descuento -->
+
+        <input type="hidden" name="precio_con_descuento" id="precio_con_descuento" value="">
+       
+        <!-- Sección de Pago y Descuento -->
 <h2 class="payment-title">Sección de pago</h2>
 
 <section class="payment-section">
@@ -245,7 +258,7 @@ if (isset($_POST['send'])) {
     </div>
 
     <div class="inputBox">
-      <button type="button" id="apply-discount" onclick="applyDiscount()">Aplicar descuento</button>
+      <button class="btn" type="button" id="apply-discount" onclick="applyDiscount()">Aplicar descuento</button>
     </div>
   </div>
 
@@ -266,30 +279,12 @@ if (isset($_POST['send'])) {
     </div>
 
     <div class="button-container">
-      <button type="button" id="pay-button" onclick="simulatePayment()">Pagar ahora</button>
+    <button class="btn" type="button" id="pay-button" onclick="simulatePayment()">Pagar ahora</button>
+<input type="hidden" name="send" value="1">
+
     </div>
   </div>
 </section>
-
-
-
-
-
-
-
-<!-- Modal de éxito -->
-<?php if ($reservation_success): ?>
-<div id="modal-overlay" class="modal-overlay">
-    <div id="modal-message" class="modal-content">
-        <span class="close-button" onclick="closeModal()">&times;</span>
-        <h2>¡Reserva realizada con éxito!</h2>
-        <p>Tu reserva ha sido realizada con éxito. ¡Gracias por elegirnos!</p>
-        <button onclick="closeModal()">Cerrar</button>
-    </div>
-</div>
-<?php endif; ?>
-
-
 
 
 
@@ -316,7 +311,33 @@ window.addEventListener('load', function() {
     }
 });
 </script>
+<?php if ($reservation_success): ?>
+<script>
+window.addEventListener('load', function () {
+    document.getElementById('modal-overlay')?.classList.add('show');
+    document.getElementById('modal-message')?.classList.add('show');
+});
+</script>
+<?php endif; ?>
 
+<script>
+document.querySelector('.booking-form').addEventListener('submit', function (e) {
+    const form = e.target;
+    const requiredFields = form.querySelectorAll('[required]');
+
+    for (let field of requiredFields) {
+        if (!field.value.trim()) {
+            e.preventDefault(); // Detiene el envío del formulario
+            field.focus(); // Lleva al usuario al campo vacío
+            field.style.border = '2px solid red'; // Marca el campo
+            alert('Por favor completa el campo: ' + field.previousElementSibling.textContent.trim());
+            return false; // Sale de la función
+        } else {
+            field.style.border = ''; // Limpia el estilo si está correcto
+        }
+    }
+});
+</script>
 
 </body>
 </html>

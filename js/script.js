@@ -166,37 +166,40 @@ document.addEventListener('DOMContentLoaded', function () {
 function applyDiscount() {
     const discountInput = document.getElementById('discount-code');
     const discountCode = discountInput.value.trim();
-    const validCode = discountInput.getAttribute('data-valid-code'); // Código correcto desde el HTML
+    const validCode = discountInput.getAttribute('data-valid-code');
 
     let totalPrice = parseFloat(document.getElementById('total-price').value.replace('€', '').replace(',', '.'));
-    
-    // Validar precio base
+
     if (isNaN(totalPrice) || totalPrice <= 0) {
         alert('Por favor selecciona un paquete válido antes de aplicar descuento.');
         return;
     }
 
-    // Comprobar si el código es correcto
     if (discountCode === validCode) {
         let discountPercent = 0.15; // 15% de descuento
         const discountAmount = totalPrice * discountPercent;
         const finalPrice = totalPrice - discountAmount;
 
-        // Mostrar descuentos
         document.getElementById('discount-amount').value = '€' + discountAmount.toFixed(2);
         document.getElementById('final-price').value = '€' + finalPrice.toFixed(2);
         document.getElementById('discounted-price').value = '€' + finalPrice.toFixed(2);
 
+        // ✅ Actualizar el precio oculto inmediatamente
+        document.getElementById('precio_con_descuento').value = finalPrice.toFixed(2);
+
         alert('¡Código de descuento aplicado correctamente!');
     } else {
-        // Código inválido ➔ Mostrar todo normal sin descuento
         alert('Código inválido. No se aplicó descuento.');
 
         document.getElementById('discount-amount').value = '€0.00';
         document.getElementById('final-price').value = '€' + totalPrice.toFixed(2);
         document.getElementById('discounted-price').value = '€' + totalPrice.toFixed(2);
+
+        // ✅ Restaurar el precio oculto original
+        document.getElementById('precio_con_descuento').value = totalPrice.toFixed(2);
     }
 }
+
 
 
 
@@ -225,36 +228,25 @@ function simulatePayment() {
 
     document.body.appendChild(processingModal);
 
+    // Capturar el precio con descuento antes de enviar
+    const finalPrice = document.getElementById('final-price').value.replace('€', '').replace(',', '.');
+    document.getElementById('precio_con_descuento').value = finalPrice;
+
     // Simular tiempo de procesamiento
-    setTimeout(function() {
-        // Eliminar modal de procesamiento
+    setTimeout(function () {
         document.body.removeChild(processingModal);
-        
-        // Crear modal de éxito
-        let successModal = document.createElement('div');
-        successModal.style.position = 'fixed';
-        successModal.style.top = '0';
-        successModal.style.left = '0';
-        successModal.style.width = '100%';
-        successModal.style.height = '100%';
-        successModal.style.background = 'rgba(0,0,0,0.6)';
-        successModal.style.display = 'flex';
-        successModal.style.alignItems = 'center';
-        successModal.style.justifyContent = 'center';
-        successModal.style.zIndex = '9999';
 
-        successModal.innerHTML = `
-            <div style="background:#fff; padding:30px 40px; border-radius:10px; text-align:center;">
-                <h2>¡Pago realizado con éxito!</h2>
-                <p>Serás redirigido en unos segundos...</p>
-            </div>
-        `;
+        // ✅ ENVIAR el formulario después del pago simulado
+        document.querySelector('.booking-form').submit();
 
-        document.body.appendChild(successModal);
-
-        // Redirigir automáticamente después de 3 segundos
-        setTimeout(function() {
-            window.location.href = 'booking.php'; 
-        }, 3000);
-    }, 3000);
+    }, 3000); // 3 segundos de simulación
 }
+
+
+
+
+
+    
+    
+
+

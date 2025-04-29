@@ -2389,23 +2389,6 @@ textarea {
     background-color: black;
 }
 
-/* Botón de pagar */
-.payment-section .button-container #pay-button {
-    width: 100%;
-    padding: 1.4rem;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 1.8rem;
-    border: none;
-    border-radius: 8px;
-    margin-top: 2rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.payment-section .button-container #pay-button:hover {
-    background-color: #0056b3;
-}
 
 /* Campos de precios (precio original, descuento, total) */
 .payment-section .inputBox #total-price,
