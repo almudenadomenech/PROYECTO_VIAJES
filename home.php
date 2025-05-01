@@ -187,9 +187,10 @@ session_start();
 <section class="home-offer">
 
     <div class="content">
-        <h3>Hasta un 50% de descuento </h3>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius temporibus </p>
-        <a href="booking/booking.php" class="btn">Reserva ahora</a>
+        <h3>¡Regístrate en nuestra página y obtén un descuento especial en tus reservas!</h3>
+        <p>Al iniciar sesión y completar tu reserva, recibirás automáticamente un código exclusivo de descuento para ahorrar en tu próximo viaje. </p>
+        <p>   ¡Viajar nunca fue tan fácil y económico!</p>
+        
     </div>
 
 </section>

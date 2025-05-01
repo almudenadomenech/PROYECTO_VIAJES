@@ -1,33 +1,45 @@
 <?php
-include('../includes/conexion.php'); // Conexión a la base de datos
+session_start(); 
+if (isset($_GET['subida']) && $_GET['subida'] === 'ok') {
+    $foto_url = $_SESSION['foto_perfil'];
+    $mensaje = "La foto se ha subido correctamente y se ha actualizado el perfil.";
+}
+
+include('../includes/conexion.php');
 include('../includes/navbar.php');
+
+$foto_url = '';
+$mensaje = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto_perfil'])) {
     $foto_tmp = $_FILES['foto_perfil']['tmp_name'];
-    $foto_nombre = basename($_FILES['foto_perfil']['name']);
+    $foto_nombre = time() . '_' . basename($_FILES['foto_perfil']['name']); // evitar conflictos
     $foto_ruta = '../uploads/' . $foto_nombre;
+
+    // Asegúrate de que la carpeta exista
+    if (!file_exists('../uploads')) {
+        mkdir('../uploads', 0775, true);
+    }
 
     if (move_uploaded_file($foto_tmp, $foto_ruta)) {
         $mensaje = "Foto subida correctamente.";
         $foto_url = $foto_ruta;
 
-        // ID del usuario (debe estar disponible en la sesión)
-        session_start();
         $user_id = $_SESSION['id'];
-
-        // Guardar la ruta en la base de datos
         $query = "UPDATE usuarios SET foto_perfil = '$foto_url' WHERE id = $user_id";
-        
+
         if (mysqli_query($link, $query)) {
-            $mensaje .= " La foto se ha guardado en tu perfil.";
-        } else {
-            $mensaje .= " Error al guardar la ruta en la base de datos: " . mysqli_error($link);
-        }
+           
+            $_SESSION['foto_perfil'] = $foto_url; // actualizar sesión para navbar
+            header("Location: avatar.php?subida=ok");
+            exit();
+        } 
     } else {
         $mensaje = "Error al subir la foto.";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">

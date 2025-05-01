@@ -62,13 +62,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $excursiones = isset($_POST['excursiones']) ? 1 : 0;
 
 
-    // Imagen principal
-    if (!empty($_FILES['image']['name'])) {
-        $img_name = basename($_FILES['image']['name']);
-        $target = "../images/" . $img_name;
-        move_uploaded_file($_FILES['image']['tmp_name'], $target);
+  // Imagen principal (asigna 'viaje-default.png' si no se sube ninguna)
+if (!empty($_FILES['image']['name'])) {
+    $img_name = basename($_FILES['image']['name']);
+    $target = "../images/" . $img_name;
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
         $image = $img_name;
+    } else {
+        $image = 'viaje-default.png'; // fallback si falla la subida
     }
+} elseif (empty($id)) {
+    // Si es un nuevo paquete y no se ha subido imagen, usar la default
+    $image = 'viaje-default.png';
+}
+
 
     // Inserción o actualización del paquete con imagen principal
     if (!empty($id)) {
@@ -87,6 +94,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($id)) {
             $id = mysqli_insert_id($link);
         }
+    // ✅ GUARDAR DURACIONES Y PRECIOS
+    // Borrar duraciones anteriores si es edición
+    if (!empty($_POST['id'])) {
+        mysqli_query($link, "DELETE FROM duraciones_paquete WHERE paquete_id = $id");
+    }
+
+    // Insertar nuevas duraciones
+    for ($i = 1; $i <= 3; $i++) {
+        $duracion = isset($_POST["duracion_$i"]) ? (int)$_POST["duracion_$i"] : 0;
+        $precio = isset($_POST["precio_$i"]) ? (float)$_POST["precio_$i"] : 0;
+
+        if ($duracion > 0 && $precio > 0) {
+            $insert_duracion = "INSERT INTO duraciones_paquete (paquete_id, duracion, precio) VALUES ($id, $duracion, $precio)";
+            mysqli_query($link, $insert_duracion);
+        }
+    }
 
         // ✅ Galería de imágenes
         if (!empty($_FILES['gallery_images']['name'][0])) {

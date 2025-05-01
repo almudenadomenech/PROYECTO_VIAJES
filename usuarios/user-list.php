@@ -59,7 +59,8 @@ if (!$result) {
                 <h2><?= htmlspecialchars($user['usuario']); ?></h2>
                 <div class="acciones">
                     <a href="user-detail.php?id=<?= $user['id']; ?>" class="btn btn-detalles">Detalles</a>
-                    <a href="eliminar_usuario.php?id=<?= $user['id']; ?>" class="btn btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
+                    <button class="btn btn-eliminar" onclick="openModal(<?= $user['id']; ?>)">Eliminar</button>
+
                 </div>
             </div>
         <?php endwhile; ?>
@@ -71,12 +72,49 @@ if (!$result) {
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
      <script src="../js/script.js"></script>
+  <!-- Modal de confirmación -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>¿Estás seguro de que deseas eliminar este usuario?</h3>
+        <form id="deleteForm" method="POST" action="eliminar_usuario.php">
+            <input type="hidden" name="id" id="userId">
+            <button type="submit" class="btn-confirm">Sí, Eliminar</button>
+            <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de éxito -->
+<?php if (isset($_GET['deleted']) && $_GET['deleted'] === 'true'): ?>
+<div id="successModal" class="modal" style="display:block;">
+    <div class="modal-content">
+        <span class="close" onclick="closeSuccessModal()">&times;</span>
+        <h3>El usuario se ha eliminado con éxito.</h3>
+    </div>
+</div>
+<?php endif; ?>
+   
 </body>
 </html>
   <!-- seccion footer   -->
   <?php
     include('../includes/footer.php');
 ?>
+<script>
+function openModal(id) {
+    document.getElementById('userId').value = id;
+    document.getElementById('confirmModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('confirmModal').style.display = 'none';
+}
+
+function closeSuccessModal() {
+    document.getElementById('successModal').style.display = 'none';
+}
+</script>
 
 <?php
 // Cerrar la conexión
