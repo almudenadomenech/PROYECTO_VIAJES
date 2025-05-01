@@ -104,7 +104,7 @@ if (isset($_POST['send_comment'])) {
                 <thead>
                     <tr>
                         <th>Duración</th>
-                        <th>Precio</th>
+                        <th>Precio por persona</th>
                     </tr>
                 </thead>
                 <tbody>

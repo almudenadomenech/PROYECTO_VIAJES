@@ -125,6 +125,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedDuration = selectedOption?.dataset?.duration;
         const selectedPrice = selectedOption?.dataset?.precio;
     
+        const guestCount = parseInt(document.querySelector('input[name="guest"]').value) || 1;
+
         // Establecer fecha de salida
         if (arrivalsInput.value && selectedDuration) {
             const arrivalsDate = new Date(arrivalsInput.value);
@@ -138,18 +140,21 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
         
+        
     
         // Establecer precio total
         if (selectedPrice) {
             const price = parseFloat(selectedPrice);
+            const guestCount = parseInt(document.querySelector('input[name="guest"]').value) || 1;
+        
             if (!isNaN(price)) {
-                document.getElementById('total-price').value = `€${price.toFixed(2)}`;
-                document.getElementById('discounted-price').value = `€${price.toFixed(2)}`; // Inicial igual
+                const total = price * guestCount;
+                document.getElementById('total-price').value = `€${total.toFixed(2)}`;
+                document.getElementById('discounted-price').value = `€${total.toFixed(2)}`;
+                document.getElementById('precio_con_descuento').value = total.toFixed(2); // actualiza precio oculto
             }
-        } else {
-            document.getElementById('total-price').value = "€0.00";
-            document.getElementById('discounted-price').value = "€0.00";
         }
+        
     }
     
 
@@ -158,6 +163,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Detectar cuando cambie la duración
     durationSelect.addEventListener('change', setLeavingDate);
+
+    // Recalcular precio si cambia el número de personas
+    document.querySelector('input[name="guest"]').addEventListener('input', setLeavingDate);
+
 });
 
 

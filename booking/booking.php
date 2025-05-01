@@ -193,7 +193,7 @@ if (isset($_POST['precio_con_descuento']) && is_numeric($_POST['precio_con_descu
 
             <!-- Selección de duración y precio -->
             <div class="inputBox">
-                <span>Duración y precio:</span>
+                <span>Duración y precio por persona:</span>
                 <select name="duracion_paquete_id" id="duracion_paquete_id" required>
                     <option value="">Selecciona Paquete y precio</option>
                     <?php
