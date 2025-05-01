@@ -52,12 +52,12 @@
     // Consulta para obtener las reservas
     if ($role_id == 2) {
         // Si es administrador, obtener todas las reservas
-        $sql = "SELECT b.id, b.nombre, b.email, b.location, b.numero_personas, b.fecha_inicio, b.fecha_fin
+        $sql = "SELECT b.id, b.nombre, b.email, b.location, b.fecha_inicio, b.fecha_fin, b.precio
                 FROM booking b
                 INNER JOIN usuarios u ON b.usuario_id = u.id";
     } else {
         // Si es usuario, obtener solo sus reservas
-        $sql = "SELECT b.id, b.nombre, b.email, b.location, b.numero_personas, b.fecha_inicio, b.fecha_fin
+        $sql = "SELECT b.id, b.nombre, b.email, b.location, b.fecha_inicio, b.fecha_fin, precio
                 FROM booking b
                 WHERE b.usuario_id = $usuario_id";
     }
@@ -82,9 +82,9 @@
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Destino</th>
-                <th>Personas</th>
                 <th>Fecha de Inicio</th>
                 <th>Fecha de Fin</th>
+                <th>Importe</th>
                 <th>Acción</th>
             </tr>
         </thead>
@@ -98,9 +98,9 @@
                         <td>{$row['nombre']}</td>
                         <td>{$row['email']}</td>
                         <td>{$row['location']}</td>
-                        <td>{$row['numero_personas']}</td>
                         <td>{$row['fecha_inicio']}</td>
                         <td>{$row['fecha_fin']}</td>
+                        <td>{$row['precio']}</td>
                         
                         <td>
                             <!-- Botón de eliminación -->
