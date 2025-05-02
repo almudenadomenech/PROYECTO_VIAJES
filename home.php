@@ -188,8 +188,7 @@ session_start();
 
     <div class="content">
         <h3>¡Regístrate en nuestra página y obtén un descuento especial en tus reservas!</h3>
-        <p>Al iniciar sesión y completar tu reserva, recibirás automáticamente un código exclusivo de descuento para ahorrar en tu próximo viaje. </p>
-        <p>   ¡Viajar nunca fue tan fácil y económico!</p>
+        <a href="paginas/promociones.php" class="btn">Ver promociones</a>
         
     </div>
 

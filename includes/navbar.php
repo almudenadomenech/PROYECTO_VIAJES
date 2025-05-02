@@ -24,6 +24,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <nav class="navbar">
         <a href="../home.php">Home</a>
         <a href="../paginas/acercaDe.php">Acerca de</a>
+        <a href="../paginas/promociones.php">Promociones</a>
         <a href="../paquetes/paquetes.php">Paquetes</a>
         <a href="../booking/booking.php">Booking</a>
 

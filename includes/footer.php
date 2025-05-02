@@ -8,6 +8,7 @@
             <h3>Enlaces rápidos</h3>
         <a href="../home.php"> <i class="i.fas.fa-angle-right"></i>  Home</a>
         <a href="../paginas/AcercaDe.php"> <i class="i.fas.fa-angle-right"></i>Sobre nosotros</a>
+        <a href="../paginas/promociones.php"> <i class="i.fas.fa-angle-right"></i>Promociones</a>
         <a href="../paquetes/paquetes.php"><i class="i.fas.fa-angle-right"></i>Paquetes</a>
         <a href="../booking/booking.php"><i class="i.fas.fa-angle-right"></i>Booking</a>
         </div>
