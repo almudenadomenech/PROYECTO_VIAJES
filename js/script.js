@@ -229,11 +229,30 @@ function simulatePayment() {
     processingModal.id = 'processing-modal';
 
     processingModal.innerHTML = `
-        <div style="background:#fff; padding:30px 40px; border-radius:10px; text-align:center;">
-            <h2>Procesando pago...</h2>
-            <p>Por favor espera unos segundos</p>
-        </div>
-    `;
+       <div style="
+        background: #f9f9f9;
+        padding: 60px 40px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        max-width: 400px;
+        width: 90%;
+        font-family: 'Segoe UI', sans-serif;
+        position: relative;
+    ">
+        <div class="spinner" style="
+            margin: 0 auto 30px;
+            border: 6px solid #ddd;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        "></div>
+        <h2 style="font-size: 28px; color: #2c3e50; margin-bottom: 10px;">Procesando pago...</h2>
+        <p style="font-size: 18px; color: #666;">Por favor espera unos segundos</p>
+    </div>
+`;
 
     document.body.appendChild(processingModal);
 
@@ -241,15 +260,27 @@ function simulatePayment() {
     const finalPrice = document.getElementById('final-price').value.replace('€', '').replace(',', '.');
     document.getElementById('precio_con_descuento').value = finalPrice;
 
-    // Simular tiempo de procesamiento
-    setTimeout(function () {
-        document.body.removeChild(processingModal);
+   // Simular tiempo de procesamiento
+setTimeout(function () {
+    document.body.removeChild(processingModal);
 
-        // ✅ ENVIAR el formulario después del pago simulado
-        document.querySelector('.booking-form').submit();
+    // Mostrar modal de confirmación manualmente
+    const successModal = document.getElementById('modal-message');
+    const overlay = document.getElementById('modal-overlay');
 
-    }, 3000); // 3 segundos de simulación
+    if (successModal && overlay) {
+        successModal.style.display = 'block';
+        overlay.style.display = 'block';
+    }
+
+}, 6000);
 }
+
+function submitAfterConfirmation() {
+    closeModal(); // Cierra el modal visual
+    document.querySelector('.booking-form').submit(); // Ahora sí envía el formulario
+}
+
 
 
 

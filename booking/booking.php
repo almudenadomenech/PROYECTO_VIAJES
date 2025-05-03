@@ -295,7 +295,7 @@ if (isset($_POST['precio_con_descuento']) && is_numeric($_POST['precio_con_descu
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="../js/script.js"></script>
 <script>
-// Función para cerrar el modal
+
 // Función para cerrar el modal correctamente
 function closeModal() {
     document.getElementById('modal-overlay').style.display = 'none';
@@ -338,6 +338,17 @@ document.querySelector('.booking-form').addEventListener('submit', function (e) 
     }
 });
 </script>
+<!-- Overlay oscuro -->
+<div id="modal-overlay" onclick="closeModal()" style="display: none;"></div>
+
+<!-- Contenido del modal -->
+<div id="modal-message" style="display: none;">
+    <span class="close-button" onclick="closeModal()">&times;</span>
+    <h2>¡Reserva realizada con éxito!</h2>
+    <p>Tu reserva ha sido realizada con éxito. ¡Gracias por elegirnos!</p>
+    <button onclick="submitAfterConfirmation()" class="btn-confirm">Cerrar</button>
+
+</div>
 
 </body>
 </html>
