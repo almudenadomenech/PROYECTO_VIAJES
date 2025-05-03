@@ -86,22 +86,22 @@ session_start();
 
     <div class="box">
         <img src="images/icon-3.png" alt="">
-        <h3>Trekking</h3>
+        <h3>Tren</h3>
     </div>
 
     <div class="box">
         <img src="images/icon-4.png" alt="">
-        <h3>Camp fire</h3>
+        <h3>Avión</h3>
     </div>
 
     <div class="box">
         <img src="images/icon-5.png" alt="">
-        <h3>Off road</h3>
+        <h3>Barco</h3>
     </div>
 
     <div class="box">
         <img src="images/icon-6.png" alt="">
-        <h3>Camping</h3>
+        <h3>Hotel</h3>
     </div>
 
 
