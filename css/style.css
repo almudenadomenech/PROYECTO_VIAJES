@@ -2743,6 +2743,17 @@ table td:nth-child(1), table th:nth-child(1) {
     width: 300px;
     text-align: center;
     transition: transform 0.3s ease;
+
+
+    
+    padding: 30px 40px;
+   
+    box-shadow: 0 0 30px rgba(41, 128, 185, 0.5); /* Efecto luminoso con sombra más visible */
+    text-align: center;
+    position: relative;
+    border: 3px solid transparent; /* Definir borde transparente para aplicar la imagen del borde */
+    background-clip: padding-box; /* Asegura que el borde no se superponga con el contenido */
+    background: radial-gradient(circle, #b3d9f3,  #b294be) padding-box, #fff; /* Gradiente desde el centro */
 }
 
 .usuario-card:hover {
