@@ -154,7 +154,7 @@ session_start();
             </div>
         
         <div class="content">
-            <h3>Playas de Ensuelo</h3>
+            <h3>Playas de Ensueño</h3>
             <p>Explora arrecifes, nada con delfines o prueba el surf en las mejores olas o Relájate en arenas blancas y aguas cristalinas con todo incluido.</p>
            
         </div>
